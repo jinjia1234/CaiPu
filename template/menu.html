@@ -6,10 +6,8 @@
     <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
     <link href="./public/plugins/ymPrompt/skin/flatty/ymPrompt.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="./public/plugins/ymPrompt/ymPrompt.js" type="text/javascript"></script>
+    <script src="../public/js/jquery-3.6.1.min.js"></script>
 </head>
-
-
-
 
 <body>
 
@@ -46,9 +44,8 @@
         <button>快速录入菜品</button>
     </div>
     <div class="menu_top">
-        <input id="" name="" type="checkbox">主厅
-        <input id="" name="" type="checkbox">职工
-
+        <input name="ChangJing" type="radio" value="主厅" checked>主厅
+        <input name="ChangJing" type="radio" value="职工">职工
     </div>
 
 </div>
@@ -57,7 +54,7 @@
 
     <table border="1">
         <tr>
-            <th colspan="20" id="tim"></th>
+            <th colspan="20" id="tim">机关食堂菜单主厅</th>
         </tr>
         <tr>
             <th class="meum-th" colspan="20"> 菜单效期：</th>
@@ -276,15 +273,12 @@
     // function confirmDialog() {
     //     ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
     // };
-    !function(){
-        if (1){
-            var tim ="机关食堂菜单";
-            document.getElementById("tim").innerText=tim;
-        }
+    $(document).ready(function () {
+        $(document).on('click','input[name="ChangJing"]',function (){
+            document.getElementById("tim").innerText = "机关食堂菜单"+$(this).val();
+        });
 
-
-    } ()
-
+    });
 </script>
 
 </body>
