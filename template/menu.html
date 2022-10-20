@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单编排</title>
+    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <link href="./public/plugins/ymPrompt/skin/flatty/ymPrompt.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="./public/plugins/ymPrompt/ymPrompt.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<div class="menu_">
+    <div class="menu_top">
+        <a href="/">系统功能首页</a>
+    </div>
+    <div class="menu_top">
+        <a href="menu">菜单编排</a>
+    </div>
+    <div class="menu_top">
+        <a href="data">菜品资料库</a>
+    </div>
+    <div class="menu_top">
+        <a href="chives">基础信息</a>
+    </div>
+    <div class="menu_top">
+        <a href="basic">菜单存档</a>
+    </div>
+</div>
+
+<div class="menu_qj">
+    <div class="menu_top">
+        <button>保存菜单</button>
+    </div>
+    <div class="menu_top">
+        <button>打印菜单</button>
+    </div>
+    <div class="menu_top">
+        <button>清空菜单</button>
+    </div>
+    <div class="menu_top">
+        <button>快速录入菜品</button>
+    </div>
+</div>
+
+<div class="menu_qje">
+
+    <table border="1">
+        <tr>
+            <th colspan="20" onclick="confirmDialog()">机关食堂菜单（主厅）
+            </th>
+        </tr>
+
+        <tr>
+            <th class="meum-th" colspan="20"> 菜单效期：</th>
+        </tr>
+        <tr>
+            <th>礼拜一</th>
+            <th>礼拜二</th>
+            <th>礼拜三</th>
+            <th>礼拜四</th>
+            <th>礼拜五</th>
+        </tr>
+        <tr>
+            <th colspan="20">早餐</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th colspan="20">午餐</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th colspan="20">晚餐</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+    </table>
+
+</div>
+
+<script>
+    function confirmDialog() {
+        ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true});
+    }
+</script>
+
+</body>
+</html>
