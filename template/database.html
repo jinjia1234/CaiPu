@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>菜品资料库</title>
     <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <script src="../public/js/jquery-3.6.1.min.js"></script>
 </head>
 
 <style>
@@ -41,7 +42,7 @@
     <div>
         <div>菜品信息维护（新增、更新、删除）</div>
         <div>
-            <button>保存/更新</button>
+            <button onclick="updata()">保存/更新</button>
 
             <button>删除菜品信息</button>
         </div>
@@ -60,33 +61,35 @@
                     <th>推荐指数</th>
                     <th>其它说明</th>
                 </tr>
+<!--                <form action="/updata" method="post">-->
+                <form>
                 <tr>
                     <th>
-                        <select>
+                        <select name="bianma">
                         <option>-请选择-</option>
                         <option>自动生成</option>
                         </select>
                     </th>
                     <th>
-                        <input name="" >
+                        <input name="caiming" >
                     </th>
                     <th>
-                        <select>
+                        <select name="shiyong">
                             <option>-请选择-</option>
                             <option>启用</option>
                             <option>未启用</option>
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select name="changjing">
                             <option>-请选择-</option>
                             {{ range .ChangJing }}
-                            <option>{{.}}</option>
+                            <option value="{{.}}">{{.}}</option>
                             {{ end}}
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select name="leixing">
                             <option>-请选择-</option>
                             {{ range .LeiXing }}
                             <option>{{.}}</option>
@@ -94,7 +97,7 @@
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select name="fangshi">
                             <option>-请选择-</option>
                             {{ range .FangShi }}
                             <option>{{.}}</option>
@@ -102,10 +105,10 @@
                         </select>
                     </th>
                     <th>
-                        <input name="" >
+                        <input name="shicai" >
                     </th>
                     <th>
-                        <select>
+                        <select name="tese">
                             <option>-请选择-</option>
                             {{ range .TeSe }}
                             <option>{{.}}</option>
@@ -113,7 +116,7 @@
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select name="dengji">
                             <option>-请选择-</option>
                             {{ range .DengJi }}
                             <option>{{.}}</option>
@@ -121,7 +124,7 @@
                         </select>
                     </th>
                     <th>
-                        <select>
+                        <select name="zhishu">
                             <option>-请选择-</option>
                             {{ range .ZhiShu }}
                             <option>{{.}}</option>
@@ -129,9 +132,10 @@
                         </select>
                     </th>
                     <th>
-                        <input name="" >
+                        <input name="beizhu" >
                     </th>
                 </tr>
+                </form>
             </table>
 
 
@@ -169,18 +173,58 @@
                 <th ></th>
                 <th ></th>
             </tr>
-
         <table>
-
-
-
-
-
     </div>
 
 </div>
 
 
+<script>
+    function updata(){
+        // $('form').submit();
+        // var s = document.getElementById("chengjing");
+        var bianma = $('select[name="bianma"]').val();
+        var caiming = $('input[name="caiming"]').val();
+        var shiyong = $('select[name="shiyong"]').val();
+        var changjing = $('select[name="changjing"]').val();
+        var leixing = $('select[name="leixing"]').val();
+        var fangshi = $('select[name="fangshi"]').val();
+        var shicai = $('input[name="shicai"]').val();
+        var tese = $('select[name="tese"]').val();
+        var dengji = $('select[name="dengji"]').val();
+        var zhishu = $('select[name="zhishu"]').val();
+        var beizhu = $('input[name="beizhu"]').val();
+
+
+        $.ajax({
+            url:'/updata',
+            type:'post',
+            // contentType:'application/json',
+            data:{
+                'bianma':bianma,
+                'caiming':caiming,
+                'shiyong':shiyong,
+                'changjing':changjing,
+                'leixing':leixing,
+                'fangshi':fangshi,
+                'shicai':shicai,
+                'tese':tese,
+                'dengji':dengji,
+                'zhishu':zhishu,
+                'beizhu':beizhu,
+            },
+            success:function(args) {
+                console.log(args)
+
+                alert(args)
+            }
+        })
+    }
+
+
+
+
+</script>
 
 
 

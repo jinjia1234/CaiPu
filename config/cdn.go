@@ -18,7 +18,7 @@ func JichuanInit() ([7][7]string, [7][]string) {
 	arrs := [7][7]string{}
 	arr := [7][]string{
 		{"通用", "主厅专用", "职工专用", "特制专属"},
-		{"荤菜", "素菜"},
+		{"荤菜", "素菜", "汤"},
 		{"爆炒", "炝炒", "煲炖", "蒸熏", "煎炸", "凉拌", "鲜卤"},
 		{"麻辣", "鲜嫩", "清淡", "原香"},
 		{"高", "较高", "一般", "较低", "便宜"},
@@ -28,23 +28,8 @@ func JichuanInit() ([7][7]string, [7][]string) {
 	for i := 0; i < 7; i++ {
 		for ii := 0; ii < len(arr[i]); ii++ {
 			arrs[ii][i] = arr[i][ii]
-
 			fmt.Println(arr[i][ii])
-			//if ii < len(arr[i]) {
-			//	fmt.Println("ii->", ii)
-			//	fmt.Println("i->", i)
-			//	fmt.Println(arr[ii][i])
-			//	//arrs[i][ii] = arr[ii][i]
-			//}
-
-			//fmt.Println("arr[i][ii]",arr[i][ii])
-			//if len(arr[i][ii]) > i {
-			//	fmt.Println("ii->", ii)
-			//	fmt.Println("i->", i)
-			//	fmt.Println(arr[ii][i])
-			//arrs[i][ii] = arr[ii][i]
 		}
-
 	}
 
 	return arrs, arr

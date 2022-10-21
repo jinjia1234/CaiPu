@@ -4,6 +4,7 @@ import (
 	"CaiPu/config"
 	"CaiPu/service"
 	"flag"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 	log "github.com/sirupsen/logrus"
@@ -13,6 +14,20 @@ var (
 	cfg *config.Configuration
 	svc *service.Service
 )
+
+type UpdataBody struct {
+	Bianma    string `json:"bianma"`
+	Caiming   string `json:"caiming"`
+	Shiyong   string `json:"shiyong"`
+	Changjing string `json:"changjing"`
+	Leixing   string `json:"leixing"`
+	Fangshi   string `json:"fangshi"`
+	Shicai    string `json:"shicai"`
+	Tese      string `json:"tese"`
+	Dengji    string `json:"dengji"`
+	Zhishu    string `json:"zhishu"`
+	Beizhu    string `json:"beizhu"`
+}
 
 func main() {
 	configPath := flag.String("config", "./config/config.toml", "config path")
@@ -33,6 +48,7 @@ func main() {
 		/data 菜品资料库
 		/chives	基础信息
 		/basic 菜单存档
+		/select
 	*/
 	app.Get("/", func(c *fiber.Ctx) error {
 		_, m, err := svc.FindFoodById(40)
@@ -76,6 +92,23 @@ func main() {
 		return c.Render("select", fiber.Map{
 			"Title": "Hello, Worl!",
 		})
+
+	})
+
+	app.Post("/updata", func(c *fiber.Ctx) error {
+		//c.Accepts("application/json")
+		body := new(UpdataBody)
+
+		err := c.BodyParser(body)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+
+		}
+
+		fmt.Println(body.Bianma)
+
+		return c.SendString("成功")
 
 	})
 
