@@ -1,14 +1,28 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"CaiPu/config"
+	"CaiPu/service"
+	"flag"
+	"github.com/gofiber/fiber/v2"
+	log "github.com/sirupsen/logrus"
+)
 import "github.com/gofiber/template/html"
 
+var (
+	cfg *config.Configuration
+	svc *service.Service
+)
+
 func main() {
+	configPath := flag.String("config", "./config/config.toml", "config path")
+	flag.Parse()
+	cfg = config.Init(*configPath)
+	svc = service.New(cfg)
 
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
 	})
-
 	app.Static("/public", "/public")
 
 	/*
@@ -18,8 +32,12 @@ func main() {
 		/chives	基础信息
 		/basic 菜单存档
 	*/
-
 	app.Get("/", func(c *fiber.Ctx) error {
+		_, m, err := svc.FindFoodById(40)
+		if err != nil {
+			log.Errorf("svc.FindFoodById(%d) error(%v)", 40, err)
+		}
+		println(m.Name)
 		return c.Render("index", fiber.Map{
 			"Title": "Hello, Worl!",
 		})
@@ -52,7 +70,7 @@ func main() {
 		})
 	})
 
-	err := app.Listen(":9668")
+	err := app.Listen(":" + cfg.Port)
 	if err != nil {
 		return
 	}

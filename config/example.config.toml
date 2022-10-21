@@ -1,0 +1,7 @@
+[database]
+host="localhost"
+port="3306"
+schema_name="CaiPu"
+username="root"
+password=""
+args="charset=utf8mb4&parseTime=True&loc=Local"
