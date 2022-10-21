@@ -41,11 +41,102 @@
     <div>
         <div>菜品信息维护（新增、更新、删除）</div>
         <div>
-            <button>保存更新</button>
+            <button>保存/更新</button>
 
             <button>删除菜品信息</button>
         </div>
-        <div></div>
+        <div>
+            <table border="1" >
+                <tr>
+                    <th>菜品编码</th>
+                    <th>菜品名称</th>
+                    <th>使用</th>
+                    <th>使用场景</th>
+                    <th>菜品类型</th>
+                    <th>烹饪方式</th>
+                    <th>主要食材</th>
+                    <th>菜品特色</th>
+                    <th>成本等级</th>
+                    <th>推荐指数</th>
+                    <th>其它说明</th>
+                </tr>
+                <tr>
+                    <th>
+                        <select>
+                        <option>-请选择-</option>
+                        <option>自动生成</option>
+                        </select>
+                    </th>
+                    <th>
+                        <input name="" >
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            <option>启用</option>
+                            <option>未启用</option>
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .ChangJing }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .LeiXing }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .FangShi }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <input name="" >
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .TeSe }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .DengJi }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <select>
+                            <option>-请选择-</option>
+                            {{ range .ZhiShu }}
+                            <option>{{.}}</option>
+                            {{ end}}
+                        </select>
+                    </th>
+                    <th>
+                        <input name="" >
+                    </th>
+                </tr>
+            </table>
+
+
+
+        </div>
     </div>
     <div>
         <table border="1" >
