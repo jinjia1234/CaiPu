@@ -5,9 +5,9 @@ import (
 	"CaiPu/service"
 	"flag"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html"
 	log "github.com/sirupsen/logrus"
 )
-import "github.com/gofiber/template/html"
 
 var (
 	cfg *config.Configuration
@@ -19,6 +19,8 @@ func main() {
 	flag.Parse()
 	cfg = config.Init(*configPath)
 	svc = service.New(cfg)
+
+	var tid, data = config.JichuanInit()
 
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
@@ -51,12 +53,18 @@ func main() {
 
 	app.Get("/data", func(c *fiber.Ctx) error {
 		return c.Render("database", fiber.Map{
-			"Title": "Hello, Worl!",
+			"ChangJing": data[0],
+			"LeiXing":   data[1],
+			"FangShi":   data[2],
+			"TeSe":      data[3],
+			"DengJi":    data[4],
+			"ZhiShu":    data[5],
 		})
 	})
+
 	app.Get("/chives", func(c *fiber.Ctx) error {
 		return c.Render("archives", fiber.Map{
-			"Title": "Hello, Worl!",
+			"Tdd": tid,
 		})
 	})
 	app.Get("/basic", func(c *fiber.Ctx) error {
@@ -68,6 +76,7 @@ func main() {
 		return c.Render("select", fiber.Map{
 			"Title": "Hello, Worl!",
 		})
+
 	})
 
 	err := app.Listen(":" + cfg.Port)

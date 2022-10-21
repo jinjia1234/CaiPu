@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>菜单存档</title>
+    <title>基础信息</title>
+    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
 </head>
 
 <style>
@@ -32,6 +33,40 @@
     </div>
 </div>
 
+<div>
+    <table border="1">
+        <tr>
+            <th colspan="20" id="tim">菜单选项信息</th>
+        </tr>
+
+        <tr>
+            <th > 使用场景</th>
+            <th > 菜品类型</th>
+            <th > 烹饪方式</th>
+            <th > 菜品特色</th>
+            <th > 成本等级</th>
+            <th > 推荐指数</th>
+            <th > 厅室</th>
+        </tr>
+        {{ range  .Tdd }}
+            <tr>
+            {{range .}}
+                <th > {{.}}</th>
+            {{end}}
+            </tr>
+        {{end}}
+
+
+
+
+
+
+    </table>
+
+
+
+
+</div>
 
 </body>
 </html>
