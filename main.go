@@ -7,12 +7,11 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
-	log "github.com/sirupsen/logrus"
 )
 
 var (
 	cfg *config.Configuration
-	svc *service.Service
+	//svc *service.Service
 )
 
 type UpdataBody struct {
@@ -33,7 +32,7 @@ func main() {
 	configPath := flag.String("config", "./config/config.toml", "config path")
 	flag.Parse()
 	cfg = config.Init(*configPath)
-	svc = service.New(cfg)
+	service.New(cfg)
 
 	var tid, data = config.JichuanInit()
 
@@ -51,11 +50,11 @@ func main() {
 		/select
 	*/
 	app.Get("/", func(c *fiber.Ctx) error {
-		_, m, err := svc.FindFoodById(40)
-		if err != nil {
-			log.Errorf("svc.FindFoodById(%d) error(%v)", 40, err)
-		}
-		println(m.Name)
+		//_, m, err := svc.FindFoodById(40)
+		//if err != nil {
+		//	log.Errorf("svc.FindFoodById(%d) error(%v)", 40, err)
+		//}
+		//println(m.Name)
 		return c.Render("index", fiber.Map{
 			"Title": "Hello, Worl!",
 		})
@@ -68,6 +67,7 @@ func main() {
 	})
 
 	app.Get("/data", func(c *fiber.Ctx) error {
+
 		return c.Render("database", fiber.Map{
 			"ChangJing": data[0],
 			"LeiXing":   data[1],
@@ -75,6 +75,7 @@ func main() {
 			"TeSe":      data[3],
 			"DengJi":    data[4],
 			"ZhiShu":    data[5],
+			"Quer":      service.QueryMultiRowDemo(),
 		})
 	})
 

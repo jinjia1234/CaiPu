@@ -160,20 +160,39 @@
                 <th>推荐指数</th>
                 <th>其它说明</th>
             </tr>
-            <tr>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-                <th ></th>
-            </tr>
-        <table>
+
+                {{  range .Quer  }}
+                <tr>
+
+                    <th >{{ .BianMa}}</th>
+                    <th >{{ .Name}}</th>
+                    <th >{{ .State}}</th>
+                    <th >{{ .ChangJing}}</th>
+                    <th >{{ .LeiXing}}</th>
+                    <th >{{ .FangShi}}</th>
+                    <th >{{ .ShiCai}}</th>
+                    <th >{{ .TeSe}}</th>
+                    <th >{{ .DengJi}}</th>
+                    <th >{{ .TuiJian}}</th>
+                    <th >{{ .BeiZhu}}</th>
+
+
+                </tr>
+
+                {{ end }}
+
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+<!--                <th ></th>-->
+
+        </table>
     </div>
 
 </div>

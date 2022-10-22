@@ -1,27 +1,24 @@
 package dao
 
 import (
-	"CaiPu/library/sql"
-	"github.com/jinzhu/gorm"
+	"CaiPu/config"
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
-type Dao struct {
-	db *gorm.DB
+var DbInit = DbWork{}
+
+type DbWork struct {
+	Conn *sqlx.DB
 }
 
-func New() *Dao {
-	var database sql.Database
-	database.Host = "43.136.132.176"
-	database.Port = "14357"
-	database.SchemaName = "37617718_caidan"
-	database.Username = "37617718"
-	database.Password = "37617718."
-	database.Args = "charset=utf8mb4&parseTime=True&loc=Local"
-	return &Dao{
-		db: sql.NewMysql(database),
+func New(c *config.Configuration) {
+	s := fmt.Sprintf("%s:%s@(%s:%s)/%s", c.Database.Username, c.Database.Password, c.Database.Host, c.Database.Port, c.Database.SchemaName)
+	db, err := sqlx.Connect("mysql", s+"?parseTime=true&loc=Asia%2FShanghai&charset=utf8")
+	if err != nil {
+		fmt.Println("open mysql err %s", err)
 	}
-}
-
-func (d *Dao) Begin() *gorm.DB {
-	return d.db.Begin()
+	db.SetMaxOpenConns(20)
+	DbInit.Conn = db
 }

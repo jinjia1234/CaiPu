@@ -1,7 +1,5 @@
 package config
 
-import "fmt"
-
 func JichuanInit() ([7][7]string, [7][]string) {
 	//h1 := [7]string{"通用", "荤菜", "爆炒", "麻辣", "高", "★★★★★", "主厅"}
 
@@ -12,7 +10,6 @@ func JichuanInit() ([7][7]string, [7][]string) {
 		菜品特色  3
 		成本等级  4
 		推荐指数  5
-
 	*/
 
 	arrs := [7][7]string{}
@@ -28,7 +25,6 @@ func JichuanInit() ([7][7]string, [7][]string) {
 	for i := 0; i < 7; i++ {
 		for ii := 0; ii < len(arr[i]); ii++ {
 			arrs[ii][i] = arr[i][ii]
-			fmt.Println(arr[i][ii])
 		}
 	}
 
