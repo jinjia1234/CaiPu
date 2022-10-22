@@ -3,22 +3,13 @@ package service
 import (
 	"CaiPu/config"
 	"CaiPu/dao"
-	"CaiPu/model"
 )
 
-//type Service struct {
-//	cfg *config.Configuration
-//	dao *dao.Dao
-//}
-
-func New(c *config.Configuration) {
-
-	dao.New(c)
-
+type Service struct {
+	cfg *config.Configuration
+	dao *dao.Dao
 }
 
-func QueryMultiRowDemo() []model.Foods {
-	demo := dao.QueryMultiRowDemo()
-
-	return demo
+func New(c *config.Configuration) *Service {
+	return &Service{cfg: c, dao: dao.New(c)}
 }

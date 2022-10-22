@@ -2,37 +2,26 @@ package main
 
 import (
 	"CaiPu/config"
+	"CaiPu/dbsql"
+	"CaiPu/http"
+	"CaiPu/model"
 	"CaiPu/service"
 	"flag"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 )
 
 var (
 	cfg *config.Configuration
-	//svc *service.Service
+	svc *service.Service
 )
-
-type UpdataBody struct {
-	Bianma    string `json:"bianma"`
-	Caiming   string `json:"caiming"`
-	Shiyong   string `json:"shiyong"`
-	Changjing string `json:"changjing"`
-	Leixing   string `json:"leixing"`
-	Fangshi   string `json:"fangshi"`
-	Shicai    string `json:"shicai"`
-	Tese      string `json:"tese"`
-	Dengji    string `json:"dengji"`
-	Zhishu    string `json:"zhishu"`
-	Beizhu    string `json:"beizhu"`
-}
 
 func main() {
 	configPath := flag.String("config", "./config/config.toml", "config path")
 	flag.Parse()
 	cfg = config.Init(*configPath)
-	service.New(cfg)
+	svc = service.New(cfg)
+	dbsql.New(cfg)
 
 	var tid, data = config.JichuanInit()
 
@@ -67,6 +56,14 @@ func main() {
 	})
 
 	app.Get("/data", func(c *fiber.Ctx) error {
+		var (
+			foods []model.Food
+			err   error
+		)
+		foods, err = svc.FindFoods()
+		if err != nil {
+			return c.JSON(err)
+		}
 
 		return c.Render("database", fiber.Map{
 			"ChangJing": data[0],
@@ -75,7 +72,8 @@ func main() {
 			"TeSe":      data[3],
 			"DengJi":    data[4],
 			"ZhiShu":    data[5],
-			"Quer":      service.QueryMultiRowDemo(),
+			"Quer":      dbsql.QueryMultiRowDemo(),
+			"Quer1":     foods,
 		})
 	})
 
@@ -93,26 +91,9 @@ func main() {
 		return c.Render("select", fiber.Map{
 			"Title": "Hello, Worl!",
 		})
-
 	})
-
-	app.Post("/updata", func(c *fiber.Ctx) error {
-		//c.Accepts("application/json")
-		body := new(UpdataBody)
-
-		err := c.BodyParser(body)
-		if err != nil {
-			fmt.Println(err.Error())
-			return err
-
-		}
-
-		fmt.Println(body.Bianma)
-
-		return c.SendString("成功")
-
-	})
-
+	app.Post("/food_save", http.FoodSave) // 菜保存
+	app.Post("/food_find", http.FoodFind) // 菜查询
 	err := app.Listen(":" + cfg.Port)
 	if err != nil {
 		return

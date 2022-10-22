@@ -8,14 +8,12 @@
 </head>
 
 <style>
-    .menu_top{
-        display:inline;
-        margin:30px;
+    .menu_top {
+        display: inline;
+        margin: 30px;
     }
 </style>
 <body>
-
-
 
 <div class="menu_">
     <div class="menu_top">
@@ -35,7 +33,6 @@
     </div>
 </div>
 
-
 <div>
     <div>机关食堂菜品资料库</div>
     <div>当前已收录菜品：20个；荤菜：10个；素菜10个。</div>
@@ -47,7 +44,7 @@
             <button>删除菜品信息</button>
         </div>
         <div>
-            <table border="1" >
+            <table border="1">
                 <tr>
                     <th>菜品编码</th>
                     <th>菜品名称</th>
@@ -61,90 +58,88 @@
                     <th>推荐指数</th>
                     <th>其它说明</th>
                 </tr>
-<!--                <form action="/updata" method="post">-->
+                <!--                <form action="/updata" method="post">-->
                 <form>
-                <tr>
-                    <th>
-                        <select name="bianma">
-                        <option>-请选择-</option>
-                        <option>自动生成</option>
-                        </select>
-                    </th>
-                    <th>
-                        <input name="caiming" >
-                    </th>
-                    <th>
-                        <select name="shiyong">
-                            <option>-请选择-</option>
-                            <option>启用</option>
-                            <option>未启用</option>
-                        </select>
-                    </th>
-                    <th>
-                        <select name="changjing">
-                            <option>-请选择-</option>
-                            {{ range .ChangJing }}
-                            <option value="{{.}}">{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <select name="leixing">
-                            <option>-请选择-</option>
-                            {{ range .LeiXing }}
-                            <option>{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <select name="fangshi">
-                            <option>-请选择-</option>
-                            {{ range .FangShi }}
-                            <option>{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <input name="shicai" >
-                    </th>
-                    <th>
-                        <select name="tese">
-                            <option>-请选择-</option>
-                            {{ range .TeSe }}
-                            <option>{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <select name="dengji">
-                            <option>-请选择-</option>
-                            {{ range .DengJi }}
-                            <option>{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <select name="zhishu">
-                            <option>-请选择-</option>
-                            {{ range .ZhiShu }}
-                            <option>{{.}}</option>
-                            {{ end}}
-                        </select>
-                    </th>
-                    <th>
-                        <input name="beizhu" >
-                    </th>
-                </tr>
+                    <tr>
+                        <th>
+                            <select name="bianma">
+                                <option>-请选择-</option>
+                                <option>自动生成</option>
+                            </select>
+                        </th>
+                        <th>
+                            <input name="caiming">
+                        </th>
+                        <th>
+                            <select name="shiyong">
+                                <option>-请选择-</option>
+                                <option>启用</option>
+                                <option>未启用</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select name="changjing">
+                                <option>-请选择-</option>
+                                {{ range .ChangJing }}
+                                <option value="{{.}}">{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <select name="leixing">
+                                <option>-请选择-</option>
+                                {{ range .LeiXing }}
+                                <option>{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <select name="fangshi">
+                                <option>-请选择-</option>
+                                {{ range .FangShi }}
+                                <option>{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <input name="shicai">
+                        </th>
+                        <th>
+                            <select name="tese">
+                                <option>-请选择-</option>
+                                {{ range .TeSe }}
+                                <option>{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <select name="dengji">
+                                <option>-请选择-</option>
+                                {{ range .DengJi }}
+                                <option>{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <select name="zhishu">
+                                <option>-请选择-</option>
+                                {{ range .ZhiShu }}
+                                <option>{{.}}</option>
+                                {{ end}}
+                            </select>
+                        </th>
+                        <th>
+                            <input name="beizhu">
+                        </th>
+                    </tr>
                 </form>
             </table>
-
-
 
         </div>
     </div>
     <div>
-        <table border="1" >
-            <tr >
+        <table border="1">
+            <tr>
                 <th colspan="20">菜品库</th>
             </tr>
             <tr>
@@ -160,46 +155,28 @@
                 <th>推荐指数</th>
                 <th>其它说明</th>
             </tr>
-
-                {{  range .Quer  }}
-                <tr>
-
-                    <th >{{ .BianMa}}</th>
-                    <th >{{ .Name}}</th>
-                    <th >{{ .State}}</th>
-                    <th >{{ .ChangJing}}</th>
-                    <th >{{ .LeiXing}}</th>
-                    <th >{{ .FangShi}}</th>
-                    <th >{{ .ShiCai}}</th>
-                    <th >{{ .TeSe}}</th>
-                    <th >{{ .DengJi}}</th>
-                    <th >{{ .TuiJian}}</th>
-                    <th >{{ .BeiZhu}}</th>
-
-
-                </tr>
-
-                {{ end }}
-
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-<!--                <th ></th>-->
-
+            {{ range .Quer }}
+            <tr>
+                <th>{{ .BianMa}}</th>
+                <th>{{ .Name}}</th>
+                <th>{{ .State}}</th>
+                <th>{{ .ChangJing}}</th>
+                <th>{{ .LeiXing}}</th>
+                <th>{{ .FangShi}}</th>
+                <th>{{ .ShiCai}}</th>
+                <th>{{ .TeSe}}</th>
+                <th>{{ .DengJi}}</th>
+                <th>{{ .TuiJian}}</th>
+                <th>{{ .BeiZhu}}</th>
+            </tr>
+            {{ end }}
         </table>
     </div>
 
 </div>
 
-
 <script>
-    function updata(){
+    function updata() {
         // $('form').submit();
         // var s = document.getElementById("chengjing");
         var bianma = $('select[name="bianma"]').val();
@@ -216,23 +193,23 @@
 
 
         $.ajax({
-            url:'/updata',
-            type:'post',
+            url: '/updata',
+            type: 'post',
             // contentType:'application/json',
-            data:{
-                'bianma':bianma,
-                'caiming':caiming,
-                'shiyong':shiyong,
-                'changjing':changjing,
-                'leixing':leixing,
-                'fangshi':fangshi,
-                'shicai':shicai,
-                'tese':tese,
-                'dengji':dengji,
-                'zhishu':zhishu,
-                'beizhu':beizhu,
+            data: {
+                'bianma': bianma,
+                'caiming': caiming,
+                'shiyong': shiyong,
+                'changjing': changjing,
+                'leixing': leixing,
+                'fangshi': fangshi,
+                'shicai': shicai,
+                'tese': tese,
+                'dengji': dengji,
+                'zhishu': zhishu,
+                'beizhu': beizhu,
             },
-            success:function(args) {
+            success: function (args) {
                 console.log(args)
 
                 alert(args)
@@ -240,18 +217,7 @@
         })
     }
 
-
-
-
 </script>
-
-
-
-
-
-
-
-
 
 </body>
 </html>
