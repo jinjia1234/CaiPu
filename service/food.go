@@ -46,3 +46,28 @@ func (sv *Service) FindFoods() ([]model.Food, error) {
 	}
 	return foods, nil
 }
+
+// CountFood 统计
+func (sv *Service) CountFood() (int64, int64, int64, error) {
+	var (
+		err                                error
+		countFood, countHunCai, countSuCai int64
+	)
+	if err = sv.db.Model(model.Food{}).Count(&countFood).Error; err != nil {
+		log.Errorf("db.Model(Food).Count() error(%v)", err)
+		return countFood, countHunCai, countSuCai, nil
+	}
+	if err = sv.db.Model(model.Food{}).
+		Where("LeiXing = ?", "荤菜").
+		Count(&countHunCai).Error; err != nil {
+		log.Errorf("db.Model(Food).Count() error(%v)", err)
+		return countFood, countHunCai, countSuCai, nil
+	}
+	if err = sv.db.Model(model.Food{}).
+		Where("LeiXing = ?", "素菜").
+		Count(&countSuCai).Error; err != nil {
+		log.Errorf("db.Model(Food).Count() error(%v)", err)
+		return countFood, countHunCai, countSuCai, nil
+	}
+	return countFood, countHunCai, countSuCai, nil
+}

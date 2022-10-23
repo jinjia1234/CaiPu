@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>菜品资料库</title>
-    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/cals.css" rel="stylesheet" type="text/css">
     <script src="../public/js/jquery-3.6.1.min.js"></script>
     <script src="../public/js/jquery-md5.js"></script>
 </head>
@@ -36,7 +36,7 @@
 
 <div>
     <div>机关食堂菜品资料库</div>
-    <div>当前已收录菜品：20个；荤菜：10个；素菜10个。</div>
+    <div>当前已收录菜品：{{.countFood}}个；荤菜：{{.countHunCai}}个；素菜{{.countSuCai}}个。</div>
     <div>
         <div>菜品信息维护（新增、更新、删除）</div>
         <div>

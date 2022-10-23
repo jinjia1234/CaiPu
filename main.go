@@ -58,23 +58,32 @@ func main() {
 
 	app.Get("/data", func(c *fiber.Ctx) error {
 		var (
-			foods []model.Food
 			err   error
+			foods []model.Food
 		)
 		foods, err = svc.FindFoods()
 		if err != nil {
 			return c.JSON(err)
 		}
-
+		countFood, countHunCai, countSuCai, err := svc.CountFood()
+		if err != nil {
+			return err
+		}
+		if err != nil {
+			return c.JSON(err)
+		}
 		return c.Render("database", fiber.Map{
-			"ChangJing": data[0],
-			"LeiXing":   data[1],
-			"FangShi":   data[2],
-			"TeSe":      data[3],
-			"DengJi":    data[4],
-			"ZhiShu":    data[5],
-			"Quer":      dbsql.QueryMultiRow(),
-			"Quer1":     foods,
+			"ChangJing":   data[0],
+			"LeiXing":     data[1],
+			"FangShi":     data[2],
+			"TeSe":        data[3],
+			"DengJi":      data[4],
+			"ZhiShu":      data[5],
+			"Quer1":       dbsql.QueryMultiRow(),
+			"Quer":        foods,
+			"countFood":   countFood,
+			"countHunCai": countHunCai,
+			"countSuCai":  countSuCai,
 		})
 	})
 
