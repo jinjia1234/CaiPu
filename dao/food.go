@@ -1,10 +1,10 @@
 package dao
 
 import (
+	"CaiPu/model"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
-import "CaiPu/model"
 
 // CreateFood 创建菜
 func (d *Dao) CreateFood(food model.Food) (int64, error) {

@@ -5,6 +5,7 @@
     <title>菜品资料库</title>
     <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
     <script src="../public/js/jquery-3.6.1.min.js"></script>
+    <script src="../public/js/jquery-md5.js"></script>
 </head>
 
 <style>
@@ -41,7 +42,7 @@
         <div>
             <button onclick="updata()">保存/更新</button>
 
-            <button>删除菜品信息</button>
+            <button onclick="deletes()">删除菜品信息</button>
         </div>
         <div>
             <table border="1">
@@ -62,10 +63,11 @@
                 <form>
                     <tr>
                         <th>
-                            <select name="bianma">
-                                <option>-请选择-</option>
-                                <option>自动生成</option>
-                            </select>
+                            <input name="bianma">
+<!--                            <select name="bianma">-->
+<!--                                <option>-请选择-</option>-->
+<!--                                <option>自动生成</option>-->
+<!--                            </select>-->
                         </th>
                         <th>
                             <input name="caiming">
@@ -170,32 +172,224 @@
                 <th>{{ .BeiZhu}}</th>
             </tr>
             {{ end }}
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </table>
     </div>
 
 </div>
 
 <script>
+
+    var bianma = "";
+    var caiming = "";
+    var shiyong = "";
+    var changjing = "";
+    var leixing ="";
+    var fangshi = "";
+    var shicai = "";
+    var tese = "";
+    var dengji ="";
+    var zhishu = "";
+    var beizhu = "";
+    var timetmps =''
+    var bol = true
+
+    function getint(){
+         bianma = $('input[name="bianma"]').val();
+         caiming = $('input[name="caiming"]').val();
+         shiyong = $('select[name="shiyong"]').val();
+         changjing = $('select[name="changjing"]').val();
+         leixing = $('select[name="leixing"]').val();
+         fangshi = $('select[name="fangshi"]').val();
+         shicai = $('input[name="shicai"]').val();
+         tese = $('select[name="tese"]').val();
+         dengji = $('select[name="dengji"]').val();
+         zhishu = $('select[name="zhishu"]').val();
+         beizhu = $('input[name="beizhu"]').val();
+         T = "";
+        if (leixing === "素菜"){
+            T = "S-"
+        }else if (leixing === "荤菜"){
+            T = "H-"
+        }else if (leixing === "汤"){
+            T = "T-"
+        }else{
+            T = "W-"
+        }
+        timetmps = T + $.md5(caiming+shicai).slice(8,16)
+
+    }
     function updata() {
-        // $('form').submit();
-        // var s = document.getElementById("chengjing");
-        var bianma = $('select[name="bianma"]').val();
-        var caiming = $('input[name="caiming"]').val();
-        var shiyong = $('select[name="shiyong"]').val();
-        var changjing = $('select[name="changjing"]').val();
-        var leixing = $('select[name="leixing"]').val();
-        var fangshi = $('select[name="fangshi"]').val();
-        var shicai = $('input[name="shicai"]').val();
-        var tese = $('select[name="tese"]').val();
-        var dengji = $('select[name="dengji"]').val();
-        var zhishu = $('select[name="zhishu"]').val();
-        var beizhu = $('input[name="beizhu"]').val();
+        getint()
+        if (caiming ===""){
+            bol = false
+            alert("请填写菜名后保存")
+            return
+        }
+        if (shicai ===""){
+            bol = false
+            alert("请填写使用方法后保存")
+            return
+        }
+        if (bol){
+            console.log(timetmps)
+            $.ajax({
+                url: '/chaxun',
+                type: 'post',
+                data: {
+                    'bianma': timetmps,
+                    'caiming': caiming,
+                    'shiyong': shiyong,
+                    'changjing': changjing,
+                    'leixing': leixing,
+                    'fangshi': fangshi,
+                    'shicai': shicai,
+                    'tese': tese,
+                    'dengji': dengji,
+                    'zhishu': zhishu,
+                    'beizhu': beizhu,
+                },
+                success: function (args) {
+                    if (args === "0"){
+                        myFunction1()
+                    }else {
+                        $.ajax({
+                            url: '/iast',
+                            type: 'post',
+                            data: {
+                                'bianma': timetmps,
+                                'caiming': caiming,
+                                'shiyong': shiyong,
+                                'changjing': changjing,
+                                'leixing': leixing,
+                                'fangshi': fangshi,
+                                'shicai': shicai,
+                                'tese': tese,
+                                'dengji': dengji,
+                                'zhishu': zhishu,
+                                'beizhu': beizhu,
+                            },
+                            success: function (args) {
+                                // console.log(args)
+                                alert(args)
+                            }
+                        })
+
+                    }
+
+                }
+            })
 
 
+        }
+
+    }
+
+    function myFunction1(){
+        var x;
+        var r=confirm("菜品已存在是否更新!");
+        if (r==true){
+            x="你按下了\"确定\"按钮!";
+            console.log(x)
+
+            $.ajax({
+                url: '/upda',
+                type: 'post',
+                data: {
+                    'bianma': timetmps,
+                    'caiming': caiming,
+                    'shiyong': shiyong,
+                    'changjing': changjing,
+                    'leixing': leixing,
+                    'fangshi': fangshi,
+                    'shicai': shicai,
+                    'tese': tese,
+                    'dengji': dengji,
+                    'zhishu': zhishu,
+                    'beizhu': beizhu,
+                },
+                success: function (args) {
+                        alert(args)
+
+                }
+            })
+
+        }
+        else{
+            x="你按下了\"取消\"按钮!";
+            console.log(x)
+        }
+    }
+
+    function deletes() {
+        getint()
         $.ajax({
-            url: '/updata',
+            url: '/delete',
             type: 'post',
-            // contentType:'application/json',
             data: {
                 'bianma': bianma,
                 'caiming': caiming,
@@ -210,12 +404,17 @@
                 'beizhu': beizhu,
             },
             success: function (args) {
-                console.log(args)
-
                 alert(args)
+                location.reload()
             }
         })
+
+
+
     }
+
+
+
 
 </script>
 

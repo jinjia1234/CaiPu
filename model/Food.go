@@ -37,6 +37,24 @@ type Foods struct {
 
 }
 
+type Names struct {
+	Name string `db:"name"`
+}
+
+type UpdataBody struct {
+	Bianma    string `json:"bianma"`
+	Caiming   string `json:"caiming"`
+	Shiyong   string `json:"shiyong"`
+	Changjing string `json:"changjing"`
+	Leixing   string `json:"leixing"`
+	Fangshi   string `json:"fangshi"`
+	Shicai    string `json:"shicai"`
+	Tese      string `json:"tese"`
+	Dengji    string `json:"dengji"`
+	Zhishu    string `json:"zhishu"`
+	Beizhu    string `json:"beizhu"`
+}
+
 func (Food) TableName() string {
 	return "food"
 }

@@ -7,6 +7,7 @@ import (
 	"CaiPu/model"
 	"CaiPu/service"
 	"flag"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 )
@@ -72,9 +73,80 @@ func main() {
 			"TeSe":      data[3],
 			"DengJi":    data[4],
 			"ZhiShu":    data[5],
-			"Quer":      dbsql.QueryMultiRowDemo(),
+			"Quer":      dbsql.QueryMultiRow(),
 			"Quer1":     foods,
 		})
+	})
+
+	app.Post("/iast", func(c *fiber.Ctx) error {
+		//c.Accepts("application/json")
+		body := new(model.UpdataBody)
+
+		err := c.BodyParser(body)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+
+		}
+		res := dbsql.IastInserId(body)
+		fmt.Println(body)
+		if res {
+			return c.SendString("添加菜品成功！")
+		} else {
+			return c.SendString("添加菜品失败！")
+		}
+	})
+	app.Post("/upda", func(c *fiber.Ctx) error {
+		//c.Accepts("application/json")
+		body := new(model.UpdataBody)
+
+		err := c.BodyParser(body)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+
+		}
+		res := dbsql.Updata(body)
+		fmt.Println(body)
+		if res {
+			return c.SendString("更新菜品成功！")
+		} else {
+			return c.SendString("更新菜品失败！")
+		}
+	})
+
+	app.Post("/chaxun", func(c *fiber.Ctx) error {
+		body := new(model.UpdataBody)
+
+		err := c.BodyParser(body)
+		bol := dbsql.QueryRow(body.Caiming)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		if bol {
+			return c.SendString("0")
+
+		} else {
+			return c.SendString("1")
+		}
+	})
+
+	app.Post("/delete", func(c *fiber.Ctx) error {
+		body := new(model.UpdataBody)
+
+		err := c.BodyParser(body)
+		bol := dbsql.Delete(body.Bianma)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		if bol {
+			return c.SendString("菜品删除成功！")
+
+		} else {
+			return c.SendString("菜品删除失败！")
+		}
 	})
 
 	app.Get("/chives", func(c *fiber.Ctx) error {
