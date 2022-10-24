@@ -55,6 +55,42 @@ type UpdataBody struct {
 	Beizhu    string `json:"beizhu"`
 }
 
+type Tshuz struct {
+	Field1 []string `json:"0"`
+	Field2 []string `json:"1"`
+	Field3 []string `json:"2"`
+	Field4 []string `json:"3"`
+	Field5 []string `json:"4"`
+}
+type BaoCuncd struct {
+	ChangJing string `json:"ChangJing"`
+	Time      string `json:"time"`
+	ZaoCan    string `json:"zaocan"`
+	WanCan    string `json:"wancan"`
+	WuCan     string `json:"wucan"`
+}
+
+type BaoCuncdS struct {
+	ID        int64     `db:"id"`
+	ChangJing string    `db:"ChangJing"`  // 场景
+	Time      string    `db:"time"`       // 时间
+	ZaoCan    string    `db:"zaocan"`     // 早餐
+	WanCan    string    `db:"wancan"`     // 完晚餐
+	WuCan     string    `db:"wucan"`      // 午餐
+	CreatedAt time.Time `db:"created_at"` // 创建时间
+	UpdateAt  time.Time `db:"update_at"`  // 更新时间
+
+}
+
+type BaoCuncdCP struct {
+	ChangJing string `db:"ChangJing"` // 场景
+	Time      string `db:"time"`      // 时间
+	ZaoCan    string `db:"zaocan"`    // 早餐
+	WanCan    string `db:"wancan"`    // 完晚餐
+	WuCan     string `db:"wucan"`     // 午餐
+
+}
+
 func (Food) TableName() string {
 	return "food"
 }

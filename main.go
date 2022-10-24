@@ -56,6 +56,19 @@ func main() {
 		})
 	})
 
+	app.Get("/menus", func(c *fiber.Ctx) error {
+		id := c.Query("id")
+		times, changjing, zaocan, wucan, wancan := dbsql.QueryRowCp(id)
+		fmt.Println("早餐", zaocan)
+		return c.Render("menus", fiber.Map{
+			"times":     times,
+			"changjing": changjing,
+			"zaocan":    zaocan,
+			"wucan":     wucan,
+			"wancan":    wancan,
+		})
+	})
+
 	app.Get("/data", func(c *fiber.Ctx) error {
 		var (
 			err   error
@@ -65,7 +78,9 @@ func main() {
 		if err != nil {
 			return c.JSON(err)
 		}
-		countFood, countHunCai, countSuCai, err := svc.CountFood()
+		//conun, countHunCai, countSuCai, err := svc.CountFood()
+		conun, countHunCai, countSuCai := dbsql.Count()
+
 		if err != nil {
 			return err
 		}
@@ -81,7 +96,7 @@ func main() {
 			"ZhiShu":      data[5],
 			"Quer1":       dbsql.QueryMultiRow(),
 			"Quer":        foods,
-			"countFood":   countFood,
+			"countFood":   conun,
 			"countHunCai": countHunCai,
 			"countSuCai":  countSuCai,
 		})
@@ -124,13 +139,26 @@ func main() {
 		}
 	})
 
+	app.Post("baocuncd", func(c *fiber.Ctx) error {
+		body := new(model.BaoCuncd)
+		err := c.BodyParser(body)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+
+		}
+		_ = dbsql.IastInserCP(body)
+		fmt.Println(body.ZaoCan)
+
+		return c.SendString("0")
+
+	})
+
 	app.Post("/chaxun", func(c *fiber.Ctx) error {
 		body := new(model.UpdataBody)
-
 		err := c.BodyParser(body)
 		bol := dbsql.QueryRow(body.Caiming)
 		if err != nil {
-			fmt.Println(err.Error())
 			return err
 		}
 		if bol {
@@ -139,6 +167,21 @@ func main() {
 		} else {
 			return c.SendString("1")
 		}
+	})
+
+	app.Get("/lishi", func(c *fiber.Ctx) error {
+		res := dbsql.QueryMultiRowCP()
+		//sum := len(res)
+		var le []string
+		for _, v := range res {
+			le = append(le, v.Time+"("+v.ChangJing+"厅)")
+
+		}
+		fmt.Println(le)
+
+		return c.Render("lishi", fiber.Map{
+			"le": le,
+		})
 	})
 
 	app.Post("/delete", func(c *fiber.Ctx) error {

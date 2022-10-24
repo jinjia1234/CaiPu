@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择历史菜谱查看</title>
+</head>
+<body>
+
+{{range $k,$v :=.le}}
+<p>
+    <a onclick="loc({{$v}})">{{$v}}</a>
+</p>
+{{end}}
+
+
+
+<script>
+    function loc(s){
+        console.log(s.split("("))
+        debugger
+        window.top.location.href="menus?id="+s.split("(")[0]
+
+    }
+
+</script>
+
+</body>
+</html>

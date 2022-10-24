@@ -32,7 +32,7 @@
 
 <div class="menu_qj">
     <div class="menu_top">
-        <button>保存菜单</button>
+        <button onclick="baocuncd()">保存菜单</button>
     </div>
     <div class="menu_top">
         <button>打印菜单</button>
@@ -41,7 +41,7 @@
         <button>清空菜单</button>
     </div>
     <div class="menu_top">
-        <button>快速录入菜品</button>
+        <button onclick="lishi()">打开历史存档菜谱</button>
     </div>
     <div class="menu_top">
         <input checked name="ChangJing" type="radio" value="主厅">主厅
@@ -57,7 +57,7 @@
             <th colspan="20" id="tim">机关食堂菜单主厅</th>
         </tr>
         <tr>
-            <th class="meum-th" colspan="20"> 菜单效期：</th>
+            <th class="meum-th" colspan="20"> 菜单效期：<input name="inputtime1" type="date"> -- <input name="inputtime2" type="date"></th>
         </tr>
         <tr>
             <th>礼拜一</th>
@@ -69,129 +69,136 @@
         <tr>
             <th colspan="20">早餐</th>
         </tr>
-        <tr>
+
+
+        <tr class="zaocamtr" onclick="confirmDialog()">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
+
+
+
+
+
         <tr>
             <th colspan="20">午餐</th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wucantr">
             <th></th>
             <th></th>
             <th></th>
@@ -201,63 +208,63 @@
         <tr>
             <th colspan="20">晚餐</th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
-        <tr>
+        <tr class="wancantr">
             <th></th>
             <th></th>
             <th></th>
@@ -270,16 +277,107 @@
 </div>
 
 <script>
-    // function confirmDialog() {
-    //     ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
-    // };
+    function confirmDialog() {
+        ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
+    };
+    var ting ='主厅'
+
     $(document).ready(function () {
         $(document).on('click','input[name="ChangJing"]',function (){
-            document.getElementById("tim").innerText = "机关食堂菜单"+$(this).val();
+            ting = $(this).val()
+            document.getElementById("tim").innerText = "机关食堂菜单"+ting;
         });
-
     });
     console.log("我打印了信息")
+
+    function baocuncd(){
+        var zaocan = {
+            '0':[],
+            '1':[],
+            '2':[],
+            '3':[],
+            '4':[],
+
+
+        };
+        var wucan ={
+            '0':[],
+            '1':[],
+            '2':[],
+            '3':[],
+            '4':[],
+        };
+        var wancan ={
+            '0':[],
+            '1':[],
+            '2':[],
+            '3':[],
+            '4':[],
+        };
+        var baocuntime =$('input[name="inputtime1"]').val()+"--"+$('input[name="inputtime2"]').val();
+
+
+        $('.zaocamtr').each(function (){
+
+            $(this).find('th').each(function (k,v) {
+                zaocan[k].push($(this).html())
+            })
+        })
+
+        $('.wucantr').each(function (){
+
+            $(this).find('th').each(function (k,v) {
+                wucan[k].push($(this).html())
+            })
+        })
+
+        $('.wancantr').each(function (){
+
+            $(this).find('th').each(function (k,v) {
+                wancan[k].push($(this).html())
+            })
+        })
+        console.log(JSON.stringify(zaocan))
+        console.log(wucan)
+        console.log(wancan)
+        console.log(baocuntime)
+        console.log(ting)
+
+        $.ajax({
+            url: '/baocuncd',
+            type: 'post',
+            data: {
+                'ChangJing': ting,
+                'time': baocuntime,
+                'zaocan': JSON.stringify(zaocan),
+                'wancan': JSON.stringify(wancan),
+                'wucan': JSON.stringify(wucan),
+            },
+            success: function (args) {
+                    alert(args)
+
+            }
+
+        })
+
+    }
+    function lishi(){
+        $.ajax({
+            url: '/lishi',
+            type: 'GET',
+            success: function () {
+                !function () {
+                    ymPrompt.win({message: './lishi', width: 500, height: 600, title: '选择历史菜谱', maxBtn: true, minBtn: true, iframe: true})
+                }();
+
+            }
+
+        })
+
+
+    }
+
+
 </script>
 
 </body>
