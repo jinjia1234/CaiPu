@@ -51,8 +51,16 @@ func main() {
 	})
 
 	app.Get("/menu", func(c *fiber.Ctx) error {
+		var (
+			err   error
+			foods []model.Food
+		)
+		foods, err = svc.FindFoods()
+		if err != nil {
+			return c.JSON(err)
+		}
 		return c.Render("menu", fiber.Map{
-			"Title": "Hello, Worl!",
+			"cdlist": foods,
 		})
 	})
 
@@ -213,7 +221,7 @@ func main() {
 	})
 	app.Get("/select", func(c *fiber.Ctx) error {
 		return c.Render("select", fiber.Map{
-			"Title": "Hello, Worl!",
+			"id": c.Query("id"),
 		})
 	})
 	app.Post("/food_save", http.FoodSave) // 菜保存

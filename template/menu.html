@@ -71,7 +71,7 @@
         </tr>
 
 
-        <tr class="zaocamtr" onclick="confirmDialog()">
+        <tr class="zaocamtr">
             <th></th>
             <th></th>
             <th></th>
@@ -143,18 +143,18 @@
             <th colspan="20">午餐</th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu0-0"></th>
+            <th id="wu0-1"></th>
+            <th id="wu0-2"></th>
+            <th id="wu0-3"></th>
+            <th id="wu0-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu1-0"></th>
+            <th id="wu1-1"></th>
+            <th id="wu1-2"></th>
+            <th id="wu1-3"></th>
+            <th id="wu1-4"></th>
         </tr>
         <tr class="wucantr">
             <th></th>
@@ -277,17 +277,28 @@
 </div>
 
 <script>
-    function confirmDialog() {
-        ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
-    };
-    var ting ='主厅'
+    var cdlist = [];
+    !function (){
+        {{range .cdlist}}
+            var row = {BianMa:"{{.BianMa}}",LeiXing:"{{.LeiXing}}",Name:"{{.Name}}"};
+            cdlist.push(row);
+        {{end}}
+    }()
+    localStorage.setItem("cdlist",JSON.stringify(cdlist));
 
+    var ting ='主厅'
     $(document).ready(function () {
+        $(document).on('click','.zaocamtr th,.wucantr th,.wancantr th',function (){
+            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
+        });
         $(document).on('click','input[name="ChangJing"]',function (){
             ting = $(this).val()
             document.getElementById("tim").innerText = "机关食堂菜单"+ting;
         });
     });
+    function select(id,name){
+        $('#'+id).html(name);
+    }
     console.log("我打印了信息")
 
     function baocuncd(){

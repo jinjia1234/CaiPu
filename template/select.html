@@ -3,22 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>select</title>
+    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <script src="../public/js/jquery-3.6.1.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-{{.}}
-
-
+<button type="button" onclick="location.href='?id={{.id}}&leixing='">全部</button>
+<button type="button" onclick="location.href='?id={{.id}}&leixing=早餐'">早餐</button>
+<button type="button" onclick="location.href='?id={{.id}}&leixing=荤菜'">荤菜</button>
+<button type="button" onclick="location.href='?id={{.id}}&leixing=素菜'">素菜</button>
+<button type="button" onclick="location.href='?id={{.id}}&leixing=汤'">汤</button>
+<table>
+    <tr>
+        <th>编号</th>
+        <th>类型</th>
+        <th>名称</th>
+    </tr>
+    <tbody class="list">
+    </tbody>
+</table>
 
 </body>
 
-
-
 <script>
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return null;
+    }
 
+    var cdlist = JSON.parse(localStorage.getItem("cdlist"));
+    var leixing = getQueryString("leixing");
+    var data = [];
+    for (var i = 0; i < cdlist.length; i++) {
+        if (leixing != null && leixing != "") {
+            if (cdlist[i].LeiXing == leixing) data.push(cdlist[i]);
+        } else {
+            data.push(cdlist[i]);
+        }
+    }
+    $('.list').html('');
+    for (var i = 0; i < data.length; i++) {
+        $('.list').append('<tr><td>' + data[i].BianMa + '</td><td>' + data[i].LeiXing + '</td><td>' + data[i].Name + '</td></tr>');
+    }
+    $(document).on('click','.list td',function (){
+        parent.select("{{.id}}", $(this).parents('tr').find('td:nth-child(3)').html());
+        parent.ymPrompt.close();
+    });
 
 </script>
-
-
-
 
 </html>
