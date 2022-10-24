@@ -51,29 +51,29 @@ func main() {
 	})
 
 	app.Get("/menu", func(c *fiber.Ctx) error {
-		var (
-			err   error
-			foods []model.Food
-		)
-		foods, err = svc.FindFoods()
-		if err != nil {
-			return c.JSON(err)
-		}
+		//var (
+		//	err   error
+		//	foods []model.Food
+		//)
+		//foods, err = svc.FindFoods()
+		//if err != nil {
+		//	return c.JSON(err)
+		//}
 		return c.Render("menu", fiber.Map{
-			"cdlist": foods,
+			"cdlist": dbsql.QueryMultiRow(),
 		})
 	})
 
 	app.Get("/menus", func(c *fiber.Ctx) error {
 		id := c.Query("id")
 		times, changjing, zaocan, wucan, wancan := dbsql.QueryRowCp(id)
-		fmt.Println("早餐", zaocan)
 		return c.Render("menus", fiber.Map{
 			"times":     times,
 			"changjing": changjing,
 			"zaocan":    zaocan,
 			"wucan":     wucan,
 			"wancan":    wancan,
+			"cdlist":    dbsql.QueryMultiRow(),
 		})
 	})
 
@@ -85,8 +85,8 @@ func main() {
 		foods, err = svc.FindFoods()
 		if err != nil {
 			return c.JSON(err)
+
 		}
-		//conun, countHunCai, countSuCai, err := svc.CountFood()
 		conun, countHunCai, countSuCai := dbsql.Count()
 
 		if err != nil {
@@ -102,8 +102,8 @@ func main() {
 			"TeSe":        data[3],
 			"DengJi":      data[4],
 			"ZhiShu":      data[5],
-			"Quer1":       dbsql.QueryMultiRow(),
-			"Quer":        foods,
+			"Quer":        dbsql.QueryMultiRow(),
+			"Quer1":       foods,
 			"countFood":   conun,
 			"countHunCai": countHunCai,
 			"countSuCai":  countSuCai,
@@ -155,10 +155,13 @@ func main() {
 			return err
 
 		}
-		_ = dbsql.IastInserCP(body)
+		res := dbsql.IastInserCP(body)
 		fmt.Println(body.ZaoCan)
-
-		return c.SendString("0")
+		if res {
+			return c.SendString("保存菜谱成功！")
+		} else {
+			return c.SendString("保存菜谱失败！")
+		}
 
 	})
 

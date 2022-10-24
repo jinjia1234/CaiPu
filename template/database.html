@@ -277,11 +277,12 @@
             T = "H-"
         }else if (leixing === "汤"){
             T = "T-"
+        }else if(leixing ==="早餐"){
+            T = "Z-"
         }else{
             T = "W-"
         }
         timetmps = T + $.md5(caiming+shicai).slice(8,16)
-
     }
     function updata() {
         getint()

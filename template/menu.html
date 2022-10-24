@@ -35,10 +35,10 @@
         <button onclick="baocuncd()">保存菜单</button>
     </div>
     <div class="menu_top">
-        <button>打印菜单</button>
+        <button onclick="doPrint()">打印菜单</button>
     </div>
     <div class="menu_top">
-        <button>清空菜单</button>
+        <button onclick="redll()">清空菜单</button>
     </div>
     <div class="menu_top">
         <button onclick="lishi()">打开历史存档菜谱</button>
@@ -49,9 +49,9 @@
     </div>
 
 </div>
+<!--startprint-->
 
-<div class="menu_qje">
-
+<div class="menu_qje" id="printArea">
     <table border="1">
         <tr>
             <th colspan="20" id="tim">机关食堂菜单主厅</th>
@@ -72,73 +72,68 @@
 
 
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao0-0"></th>
+            <th id="zao0-1"></th>
+            <th id="zao0-2"></th>
+            <th id="zao0-3"></th>
+            <th id="zao0-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao1-0"></th>
+            <th id="zao1-1"></th>
+            <th id="zao1-2"></th>
+            <th id="zao1-3"></th>
+            <th id="zao1-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao2-0"></th>
+            <th id="zao2-1"></th>
+            <th id="zao2-2"></th>
+            <th id="zao2-3"></th>
+            <th id="zao2-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao3-0"></th>
+            <th id="zao3-1"></th>
+            <th id="zao3-2"></th>
+            <th id="zao3-3"></th>
+            <th id="zao3-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao4-0"></th>
+            <th id="zao4-1"></th>
+            <th id="zao4-2"></th>
+            <th id="zao4-3"></th>
+            <th id="zao4-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao5-0"></th>
+            <th id="zao5-1"></th>
+            <th id="zao5-2"></th>
+            <th id="zao5-3"></th>
+            <th id="zao5-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao6-0"></th>
+            <th id="zao6-1"></th>
+            <th id="zao6-2"></th>
+            <th id="zao6-3"></th>
+            <th id="zao6-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao7-0"></th>
+            <th id="zao7-1"></th>
+            <th id="zao7-2"></th>
+            <th id="zao7-3"></th>
+            <th id="zao7-4"></th>
         </tr>
         <tr class="zaocamtr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="zao8-0"></th>
+            <th id="zao8-1"></th>
+            <th id="zao8-2"></th>
+            <th id="zao8-3"></th>
+            <th id="zao8-4"></th>
         </tr>
-
-
-
-
-
         <tr>
             <th colspan="20">午餐</th>
         </tr>
@@ -157,124 +152,130 @@
             <th id="wu1-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu2-0"></th>
+            <th id="wu2-1"></th>
+            <th id="wu2-2"></th>
+            <th id="wu2-3"></th>
+            <th id="wu2-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu3-0"></th>
+            <th id="wu3-1"></th>
+            <th id="wu3-2"></th>
+            <th id="wu3-3"></th>
+            <th id="wu3-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu4-0"></th>
+            <th id="wu4-1"></th>
+            <th id="wu4-2"></th>
+            <th id="wu4-3"></th>
+            <th id="wu4-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu5-0"></th>
+            <th id="wu5-1"></th>
+            <th id="wu5-2"></th>
+            <th id="wu5-3"></th>
+            <th id="wu5-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu6-0"></th>
+            <th id="wu6-1"></th>
+            <th id="wu6-2"></th>
+            <th id="wu6-3"></th>
+            <th id="wu6-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu7-0"></th>
+            <th id="wu7-1"></th>
+            <th id="wu7-2"></th>
+            <th id="wu7-3"></th>
+            <th id="wu7-4"></th>
         </tr>
         <tr class="wucantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wu8-0"></th>
+            <th id="wu8-1"></th>
+            <th id="wu8-2"></th>
+            <th id="wu8-3"></th>
+            <th id="wu8-4"></th>
         </tr>
         <tr>
             <th colspan="20">晚餐</th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan0-0"></th>
+            <th id="wan0-1"></th>
+            <th id="wan0-2"></th>
+            <th id="wan0-3"></th>
+            <th id="wan0-04"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan1-0"></th>
+            <th id="wan1-1"></th>
+            <th id="wan1-2"></th>
+            <th id="wan1-3"></th>
+            <th id="wan1-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan2-0"></th>
+            <th id="wan2-1"></th>
+            <th id="wan2-2"></th>
+            <th id="wan2-3"></th>
+            <th id="wan2-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan3-0"></th>
+            <th id="wan3-1"></th>
+            <th id="wan3-2"></th>
+            <th id="wan3-3"></th>
+            <th id="wan3-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan4-0"></th>
+            <th id="wan4-1"></th>
+            <th id="wan4-2"></th>
+            <th id="wan4-3"></th>
+            <th id="wan4-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan5-0"></th>
+            <th id="wan5-1"></th>
+            <th id="wan5-2"></th>
+            <th id="wan5-3"></th>
+            <th id="wan5-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan6-0"></th>
+            <th id="wan6-1"></th>
+            <th id="wan6-2"></th>
+            <th id="wan6-3"></th>
+            <th id="wan6-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan7-0"></th>
+            <th id="wan7-1"></th>
+            <th id="wan7-2"></th>
+            <th id="wan7-3"></th>
+            <th id="wan7-4"></th>
         </tr>
         <tr class="wancantr">
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th id="wan8-0"></th>
+            <th id="wan8-1"></th>
+            <th id="wan8-2"></th>
+            <th id="wan8-3"></th>
+            <th id="wan8-4"></th>
         </tr>
 
     </table>
-
+    <br>
+    <br>
 </div>
+
+<!--endprint-->
+
+<br>
+<br>
 
 <script>
     var cdlist = [];
@@ -299,7 +300,6 @@
     function select(id,name){
         $('#'+id).html(name);
     }
-    console.log("我打印了信息")
 
     function baocuncd(){
         var zaocan = {
@@ -327,6 +327,10 @@
         };
         var baocuntime =$('input[name="inputtime1"]').val()+"--"+$('input[name="inputtime2"]').val();
 
+        if (baocuntime ==="--"){
+            alert("请选择时间！")
+            return
+        }
 
         $('.zaocamtr').each(function (){
 
@@ -366,9 +370,7 @@
             },
             success: function (args) {
                     alert(args)
-
             }
-
         })
 
     }
@@ -387,7 +389,23 @@
 
 
     }
+    function redll(){
+        window.location.reload()
+    }
 
+
+
+
+
+    function doPrint(){
+        //设置body隐藏，并设置打印区域为可见
+        document.body.style.visibility='hidden';
+        document.getElementById('printArea').style.visibility='visible';
+        window.print();
+        // location.href='menu'
+        document.body.style.visibility='visible';
+        return false;
+    }
 
 </script>
 

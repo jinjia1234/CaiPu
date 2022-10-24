@@ -35,10 +35,10 @@
         <button onclick="baocuncd()">保存菜单</button>
     </div>
     <div class="menu_top">
-        <button>打印菜单</button>
+        <button onclick="doPrint()">打印菜单</button>
     </div>
     <div class="menu_top">
-        <button>清空菜单</button>
+        <button onclick="redll()">清空菜单</button>
     </div>
     <div class="menu_top">
         <button onclick="lishi()">打开历史存档菜谱</button>
@@ -49,15 +49,15 @@
     </div>
 
 </div>
+<!--startprint-->
 
-<div class="menu_qje">
-
+<div class="menu_qje" id="printArea">
     <table border="1">
         <tr>
             <th colspan="20" id="tim">机关食堂菜单{{.changjing}}</th>
         </tr>
         <tr>
-            <th class="meum-th" colspan="20"> 菜单效期：{{.times}}</th>
+            <th class="meum-th" colspan="20"> 菜单效期：<input name="inputtime1" type="date"> -- <input name="inputtime2" type="date"></th>
         </tr>
         <tr>
             <th>礼拜一</th>
@@ -69,55 +69,70 @@
         <tr>
             <th colspan="20">早餐</th>
         </tr>
-
-        {{ range .zaocan }}
+        {{range $k,$v := .zaocan }}
         <tr class="zaocamtr">
-            {{range . }}
-            <th>{{.}}</th>
+            {{range $kk,$vv :=$v}}
+            <th id="zao{{$k}}-{{$kk}}">{{$vv}}</th>
             {{end}}
         </tr>
         {{end}}
-
 
         <tr>
             <th colspan="20">午餐</th>
         </tr>
-        {{ range .wucan }}
-        <tr class="wucamtr">
-            {{range . }}
-            <th>{{.}}</th>
+        {{range $k,$v := .wucan }}
+        <tr class="wucantr">
+            {{range $kk,$vv :=$v}}
+            <th id="wu{{$k}}-{{$kk}}">{{$vv}}</th>
             {{end}}
         </tr>
         {{end}}
-
-
         <tr>
             <th colspan="20">晚餐</th>
         </tr>
-        {{ range .wancan }}
+        {{range $k,$v := .wancan }}
         <tr class="wancantr">
-            {{range . }}
-            <th>{{.}}</th>
+            {{range $kk,$vv :=$v}}
+            <th id="wan{{$k}}-{{$kk}}">{{$vv}}</th>
             {{end}}
         </tr>
         {{end}}
+
     </table>
+    <br>
+    <br>
 
 </div>
 
-<script>
-    // function confirmDialog() {
-    //     ymPrompt.win({message: './select', width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
-    // };
-    var ting ='主厅'
+<!--endprint-->
 
+
+
+
+
+<script>
+    var cdlist = [];
+    !function (){
+        {{range .cdlist}}
+        var row = {BianMa:"{{.BianMa}}",LeiXing:"{{.LeiXing}}",Name:"{{.Name}}"};
+        cdlist.push(row);
+        {{end}}
+    }()
+    localStorage.setItem("cdlist",JSON.stringify(cdlist));
+
+    var ting ='主厅'
     $(document).ready(function () {
+        $(document).on('click','.zaocamtr th,.wucantr th,.wancantr th',function (){
+            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
+        });
         $(document).on('click','input[name="ChangJing"]',function (){
             ting = $(this).val()
             document.getElementById("tim").innerText = "机关食堂菜单"+ting;
         });
     });
-    console.log("我打印了信息")
+    function select(id,name){
+        $('#'+id).html(name);
+    }
 
     function baocuncd(){
         var zaocan = {
@@ -143,9 +158,12 @@
             '3':[],
             '4':[],
         };
-        var baocuntime =$('input[name="inputtime"]').val();
+        var baocuntime =$('input[name="inputtime1"]').val()+"--"+$('input[name="inputtime2"]').val();
 
-
+        if (baocuntime ==="--"){
+            alert("请选择时间！")
+            return
+        }
         $('.zaocamtr').each(function (){
 
             $(this).find('th').each(function (k,v) {
@@ -205,7 +223,23 @@
 
 
     }
+    function redll(){
+        window.location.reload()
+    }
 
+
+
+
+
+    function doPrint(){
+        //设置body隐藏，并设置打印区域为可见
+        document.body.style.visibility='hidden';
+        document.getElementById('printArea').style.visibility='visible';
+        window.print();
+
+        location.href='menu'
+        return false;
+    }
 
 </script>
 
