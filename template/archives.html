@@ -34,7 +34,7 @@
     </div>
 </div>
 <div>
-    <button type="button" class="BaoCun">保存更新</button>
+    <button class="BaoCun" type="button">保存更新</button>
 </div>
 <div>
     <table border="1">
@@ -118,10 +118,21 @@
                 d[i] = data[i]
             }
             console.log(d);
+            debugger
             $.ajax({
                 type:'post',
                 url:'/chives',
-                data:{data:d},
+                data:{
+                    "changjing":d[0],
+                    "leixing":d[1],
+                    "fangshi":d[2],
+                    "tese":d[3],
+                    "dengji":d[4],
+                    "zhishu":d[5],
+                    "ting":d[6],
+
+
+                },
                 success:function (res){
                     alert("操作成功");
                     location.reload();

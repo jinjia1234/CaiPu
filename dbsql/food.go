@@ -2,6 +2,7 @@ package dbsql
 
 import (
 	"CaiPu/model"
+	"encoding/json"
 	"fmt"
 	"github.com/tidwall/gjson"
 	"strconv"
@@ -18,6 +19,7 @@ func QueryFoodMetaMultiRow() []model.FoodMeta {
 	}
 	return s
 }
+
 func QueryFoods(where map[string]string) []model.Foods {
 	whereStr := ""
 	state := where["state"]
@@ -265,6 +267,52 @@ func Updatals(c *model.BaoCuncd) bool {
 		return false
 	}
 	fmt.Println("update succ:", row)
+	return true
+
+}
+
+//更新数据（菜谱）
+func UpdataJc(c *model.FoodMetaSave) bool {
+
+	var w [1]string
+	w[0] = ""
+
+	//["ChangJing","LeiXing","FangShi","TeSe","DengJi","ZhiShu","Ting"]
+	nr := c.DengJi
+	sqlstr := "update food_meta set meta_value=? ,update_at=? where  id = ?"
+	for i := 2; i < 9; i++ {
+		if i == 2 {
+			nr = c.ChangJing
+		} else if i == 3 {
+			nr = c.LeiXing
+		} else if i == 4 {
+			nr = c.FangShi
+		} else if i == 5 {
+			nr = c.TeSe
+		} else if i == 6 {
+			nr = c.DengJi
+		} else if i == 7 {
+			nr = c.ZhiShu
+		} else if i == 8 {
+			nr = c.Ting
+		}
+		bytes, _ := json.Marshal(nr)
+
+		res, err := DbInit.Conn.Exec(sqlstr, string(bytes), time.Now(), i)
+		if err != nil {
+			fmt.Println("exec failed, ", err)
+
+		}
+		row, err := res.RowsAffected()
+		fmt.Println("update succ:", row)
+
+	}
+
+	//if err != nil {
+	//	fmt.Println("rows failed, ", err)
+	//	return false
+	//}
+	//fmt.Println("update succ:", row)
 	return true
 
 }

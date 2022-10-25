@@ -40,8 +40,6 @@ func main() {
 	svc = service.New(cfg)
 	dbsql.New(cfg)
 
-	var tid, _ = config.JichuanInit()
-
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
 	})
@@ -116,10 +114,12 @@ func main() {
 		)
 		where := make(map[string]string)
 		state := c.Query("state")
+
 		if state != "" {
 			where["state"] = state
 		}
 		ChangJing := c.Query("ChangJing")
+
 		if ChangJing != "" {
 			where["ChangJing"] = ChangJing
 		}
@@ -282,24 +282,25 @@ func main() {
 	})
 
 	app.Get("/chives", func(c *fiber.Ctx) error {
+		//var tid, _ = config.JichuanInit()
+
+		foodMeta := dbsql.QueryFoodMetaMultiRow()
+		tid := config.Jichuantoarr(foodMeta)
 		return c.Render("archives", fiber.Map{
 			"Tdd": tid,
 		})
 	})
+
 	app.Post("/chives", func(c *fiber.Ctx) error {
-		body := new(model.FoodMetaTest)
+		body := new(model.FoodMetaSave)
 		err := c.BodyParser(body)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
 		}
 		var res = true
-		//for _, v := range body {
-		//
-		//}
-		fmt.Println(body.Data)
-		//dbsql.Updatals(body)
-
+		fmt.Println(body)
+		dbsql.UpdataJc(body)
 		if res {
 			return c.SendString("保存菜谱成功！")
 		} else {

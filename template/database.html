@@ -65,10 +65,10 @@
                     <tr>
                         <th>
                             <input name="bianma">
-<!--                            <select name="bianma">-->
-<!--                                <option>-请选择-</option>-->
-<!--                                <option>自动生成</option>-->
-<!--                            </select>-->
+                            <!--                            <select name="bianma">-->
+                            <!--                                <option>-请选择-</option>-->
+                            <!--                                <option>自动生成</option>-->
+                            <!--                            </select>-->
                         </th>
                         <th>
                             <input name="caiming">
@@ -157,7 +157,7 @@
                     <select>
                         <option onclick="location.href='?'">使用场景</option>
                         {{range .ChangJing}}
-                            <option onclick="location.href='?ChangJing={{.}}'">{{.}}</option>
+                        <option onclick="location.href='?ChangJing={{.}}'">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
@@ -291,6 +291,8 @@
 
 <script>
 
+
+
     var bianma = "";
     var caiming = "";
     var shiyong = "";
@@ -306,18 +308,18 @@
     var bol = true
 
     function getint(){
-         bianma = $('input[name="bianma"]').val();
-         caiming = $('input[name="caiming"]').val();
-         shiyong = $('select[name="shiyong"]').val();
-         changjing = $('select[name="changjing"]').val();
-         leixing = $('select[name="leixing"]').val();
-         fangshi = $('select[name="fangshi"]').val();
-         shicai = $('input[name="shicai"]').val();
-         tese = $('select[name="tese"]').val();
-         dengji = $('select[name="dengji"]').val();
-         zhishu = $('select[name="zhishu"]').val();
-         beizhu = $('input[name="beizhu"]').val();
-         T = "";
+        bianma = $('input[name="bianma"]').val();
+        caiming = $('input[name="caiming"]').val();
+        shiyong = $('select[name="shiyong"]').val();
+        changjing = $('select[name="changjing"]').val();
+        leixing = $('select[name="leixing"]').val();
+        fangshi = $('select[name="fangshi"]').val();
+        shicai = $('input[name="shicai"]').val();
+        tese = $('select[name="tese"]').val();
+        dengji = $('select[name="dengji"]').val();
+        zhishu = $('select[name="zhishu"]').val();
+        beizhu = $('input[name="beizhu"]').val();
+        T = "";
         if (leixing === "素菜"){
             T = "S-"
         }else if (leixing === "荤菜"){
@@ -422,7 +424,7 @@
                     'beizhu': beizhu,
                 },
                 success: function (args) {
-                        alert(args)
+                    alert(args)
                     location.reload()
 
                 }
@@ -462,9 +464,6 @@
 
 
     }
-
-
-
 
 </script>
 

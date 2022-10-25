@@ -3,13 +3,13 @@ package model
 import "time"
 
 type FoodMetaSave struct {
-	Field1 string `json:"a0"`
-	Field2 string `json:"a1"`
-	Field3 string `json:"a2"`
-	Field4 string `json:"a3"`
-	Field5 string `json:"a4"`
-	Field6 string `json:"a5"`
-	Field7 string `json:"a6"`
+	ChangJing []string `json:"changjing"`
+	LeiXing   []string `json:"leixing"`
+	FangShi   []string `json:"fangshi"`
+	TeSe      []string `json:"tese"`
+	DengJi    []string `json:"dengji"`
+	ZhiShu    []string `json:"zhishu"`
+	Ting      []string `json:"ting"`
 }
 
 type FoodMetaTest struct {

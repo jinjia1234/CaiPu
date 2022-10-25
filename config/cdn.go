@@ -1,5 +1,11 @@
 package config
 
+import (
+	"CaiPu/model"
+	"fmt"
+	"github.com/tidwall/gjson"
+)
+
 func JichuanInit() ([7][7]string, [7][]string) {
 	//h1 := [7]string{"通用", "荤菜", "爆炒", "麻辣", "高", "★★★★★", "主厅"}
 
@@ -29,5 +35,24 @@ func JichuanInit() ([7][7]string, [7][]string) {
 	}
 
 	return arrs, arr
+
+}
+
+func Jichuantoarr(c []model.FoodMeta) [10][7]string {
+
+	arr := [7][10]string{}
+	for i := 1; i < 8; i++ {
+		for k, v := range gjson.Parse(c[i].MetaValue).Array() {
+			fmt.Println(v)
+			arr[i-1][k] = v.String()
+		}
+	}
+	arrs := [10][7]string{}
+	for i := 0; i < 7; i++ {
+		for ii := 0; ii < 10; ii++ {
+			arrs[ii][i] = arr[i][ii]
+		}
+	}
+	return arrs
 
 }
