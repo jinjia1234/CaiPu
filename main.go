@@ -6,11 +6,16 @@ import (
 	"CaiPu/http"
 	"CaiPu/model"
 	"CaiPu/service"
+	"context"
 	"flag"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 	"github.com/tidwall/gjson"
+	"io/ioutil"
+	"os/exec"
+	"strings"
+	"time"
 )
 
 var (
@@ -18,19 +23,55 @@ var (
 	svc *service.Service
 )
 
+func cmd() string {
+	// 5秒超时
+	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	command := exec.CommandContext(ctx, "dir")
+	closer, err := command.StdoutPipe()
+	defer func() {
+		cancelFunc()
+		_ = closer.Close()
+		_ = command.Wait()
+	}()
+	if err != nil {
+		return err.Error()
+	}
+	err = command.Start()
+	if err != nil {
+		return err.Error()
+	}
+	bytes, err := ioutil.ReadAll(closer)
+	if err != nil {
+		return err.Error()
+	}
+	return strings.TrimSpace(string(bytes))
+}
+
 func main() {
+	//fmt.Println(cmd())
+
+	//cmd := exec.Command("cmd.exe", "/c", "ping 192.169.0.1")
+	//output, _ := cmd.CombinedOutput() // 执行了命令, 捕获了子进程的输出(pipe)
+	////for _, v := range output {
+	////	fmt.Println(v)
+	////}
+	//fmt.Println(string(simplifiedchinese.GBK.NewDecoder().Bytes(gbkData)))
+	//return
+
 	//cmdLine := "dir"
 	//cmd := exec.Command("cmd.exe", "/c", "start "+cmdLine)
-	//if stdout, err := cmd.StdoutPipe(); err != nil { //获取输出对象，可以从该对象中读取输出结果
+	//if _, err := cmd.StdoutPipe(); err != nil { //获取输出对象，可以从该对象中读取输出结果
 	//	log.Fatal(err)
 	//}
-	//
-	//defer stdout.Close()                // 保证关闭输出流
 	//if err := cmd.Start(); err != nil { // 运行命令
-	//
 	//	log.Fatal(err)
-	//
 	//}
+	//out, err := cmd.Output()
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(string(out))
+	//
 	//err1 := cmd.Run()
 	//fmt.Printf("%s, error:%v \n", cmdLine, err1)
 	//return
