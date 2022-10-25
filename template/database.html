@@ -143,67 +143,70 @@
     </div>
     <div>
         <table border="1">
+            <thead>
             <tr>
                 <th>菜品编码</th>
                 <th>菜品名称</th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">使用</option>
-                        <option onclick="location.href='?state=启用'">启用</option>
-                        <option onclick="location.href='?state=未启用'">未启用</option>
+                    {{.selectState}}
+                    <select name="state">
+                        <option value="">使用</option>
+                        <option value="启用" {{if eq .selectState "启用"}}selected{{end}}>启用</option>
+                        <option value="未启用">未启用</option>
                     </select>
                 </th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">使用场景</option>
+                    <select name="ChangJing">
+                        <option value = "">使用场景</option>
                         {{range .ChangJing}}
-                        <option onclick="location.href='?ChangJing={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">菜品类型</option>
+                    <select name="LeiXing">
+                        <option value = "">菜品类型</option>
                         {{range .LeiXing}}
-                        <option onclick="location.href='?LeiXing={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">烹饪方式</option>
+                    <select name="FangShi">
+                        <option value = "">烹饪方式</option>
                         {{range .FangShi}}
-                        <option onclick="location.href='?FangShi={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>主要食材</th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">菜品特色</option>
+                    <select name="TeSe">
+                        <option value = "">菜品特色</option>
                         {{range .TeSe}}
-                        <option onclick="location.href='?TeSe={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">成本等级</option>
+                    <select name="DengJi">
+                        <option value = "">成本等级</option>
                         {{range .DengJi}}
-                        <option onclick="location.href='?DengJi={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>
-                    <select>
-                        <option onclick="location.href='?'">推荐指数</option>
+                    <select name="TuiJian">
+                        <option value = "">推荐指数</option>
                         {{range .ZhiShu}}
-                        <option onclick="location.href='?TuiJian={{.}}'">{{.}}</option>
+                        <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </select>
                 </th>
                 <th>其它说明</th>
             </tr>
+            </thead>
             {{ range .Quer }}
             <tr>
                 <th>{{ .BianMa}}</th>
@@ -290,7 +293,14 @@
 </div>
 
 <script>
-
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return null;
+    }
 
 
     var bianma = "";
@@ -464,6 +474,27 @@
 
 
     }
+    $(document).ready(function () {
+        $('table thead select').each(function () {
+            var data = getQueryString($(this).attr('name'));
+            if(data!=""){
+                $(this).find('option').each(function (){
+                    if(data==$(this).text()) $(this).attr('selected','selected')
+                })
+            }
+        });
+        $(document).on('change', 'table thead select', function () {
+            var data ={};
+            $('table thead select').each(function () {
+                $(this).find('option').each(function (k,v){
+                    if(k){
+                        if($(this).prop('selected')) data[$(this).parent().attr('name')] = $(this).html();
+                    }
+                })
+            });
+            location.href = "?" + $.param(data)
+        });
+    });
 
 </script>
 

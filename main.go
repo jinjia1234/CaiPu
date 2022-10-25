@@ -6,16 +6,15 @@ import (
 	"CaiPu/http"
 	"CaiPu/model"
 	"CaiPu/service"
-	"context"
 	"flag"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 	"github.com/tidwall/gjson"
-	"io/ioutil"
+	"golang.org/x/text/encoding/simplifiedchinese"
+	"os"
 	"os/exec"
 	"strings"
-	"time"
 )
 
 var (
@@ -23,58 +22,7 @@ var (
 	svc *service.Service
 )
 
-func cmd() string {
-	// 5秒超时
-	ctx, cancelFunc := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
-	command := exec.CommandContext(ctx, "dir")
-	closer, err := command.StdoutPipe()
-	defer func() {
-		cancelFunc()
-		_ = closer.Close()
-		_ = command.Wait()
-	}()
-	if err != nil {
-		return err.Error()
-	}
-	err = command.Start()
-	if err != nil {
-		return err.Error()
-	}
-	bytes, err := ioutil.ReadAll(closer)
-	if err != nil {
-		return err.Error()
-	}
-	return strings.TrimSpace(string(bytes))
-}
-
 func main() {
-	//fmt.Println(cmd())
-
-	//cmd := exec.Command("cmd.exe", "/c", "ping 192.169.0.1")
-	//output, _ := cmd.CombinedOutput() // 执行了命令, 捕获了子进程的输出(pipe)
-	////for _, v := range output {
-	////	fmt.Println(v)
-	////}
-	//fmt.Println(string(simplifiedchinese.GBK.NewDecoder().Bytes(gbkData)))
-	//return
-
-	//cmdLine := "dir"
-	//cmd := exec.Command("cmd.exe", "/c", "start "+cmdLine)
-	//if _, err := cmd.StdoutPipe(); err != nil { //获取输出对象，可以从该对象中读取输出结果
-	//	log.Fatal(err)
-	//}
-	//if err := cmd.Start(); err != nil { // 运行命令
-	//	log.Fatal(err)
-	//}
-	//out, err := cmd.Output()
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(string(out))
-	//
-	//err1 := cmd.Run()
-	//fmt.Printf("%s, error:%v \n", cmdLine, err1)
-	//return
 	configPath := flag.String("config", "./config/config.toml", "config path")
 	flag.Parse()
 	cfg = config.Init(*configPath)
@@ -150,17 +98,14 @@ func main() {
 
 	app.Get("/data/*", func(c *fiber.Ctx) error {
 		var (
-			err   error
-			foods []model.Food
+			err error
 		)
 		where := make(map[string]string)
 		state := c.Query("state")
-
 		if state != "" {
 			where["state"] = state
 		}
 		ChangJing := c.Query("ChangJing")
-
 		if ChangJing != "" {
 			where["ChangJing"] = ChangJing
 		}
@@ -184,10 +129,6 @@ func main() {
 		if TuiJian != "" {
 			where["TuiJian"] = TuiJian
 		}
-		foods, err = svc.FindFoods()
-		if err != nil {
-			return c.JSON(err)
-		}
 		conun, countHunCai, countSuCai, counT, counZao := dbsql.Count()
 		foodMeta := dbsql.QueryFoodMetaMultiRow()
 		if err != nil {
@@ -204,7 +145,6 @@ func main() {
 			"DengJi":      gjson.Parse(foodMeta[5].MetaValue).Array(),
 			"ZhiShu":      gjson.Parse(foodMeta[6].MetaValue).Array(),
 			"Quer":        dbsql.QueryFoods(where),
-			"Quer1":       foods,
 			"countFood":   conun,
 			"countHunCai": countHunCai,
 			"countSuCai":  countSuCai,
@@ -360,6 +300,14 @@ func main() {
 	})
 	app.Post("/food_save", http.FoodSave) // 菜保存
 	app.Post("/food_find", http.FoodFind) // 菜查询
+	app.Post("/hooks", func(c *fiber.Ctx) error {
+		dir, _ := os.Getwd()
+		cmd := exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
+		output, _ := cmd.CombinedOutput()
+		data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
+		fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
+		return c.JSON(map[string]interface{}{"code": 0, "msg": "success"})
+	})
 	err := app.Listen(":" + cfg.Port)
 	if err != nil {
 		return
