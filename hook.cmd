@@ -17,5 +17,5 @@ cls
 
 git fetch --all
 git reset --hard origin/master
-git pull origin master
+git pull --rebase origin/master
 go run main.go
