@@ -48,18 +48,18 @@ func getsum(n string) int {
 	return zol
 }
 
-func Count() (int, int, int) {
+func Count() (int, int, int, int, int) {
 	sqlStr := "select  * from food where id > ?"
 	//var amp model.Foods
 	var amp []model.Foods
 	err := DbInit.Conn.Select(&amp, sqlStr, 0)
 	if err != nil {
 		fmt.Printf("query failed, err:%v\n", err)
-		return 0, 0, 0
+		return 0, 0, 0, 0, 0
 
 	}
 	s := len(amp)
-	return s, getsum("荤菜"), getsum("素菜")
+	return s, getsum("荤菜"), getsum("素菜"), getsum("汤"), getsum("早餐")
 }
 
 //添加数据
@@ -137,7 +137,7 @@ func strtojson(v string) [9][5]string {
 }
 
 // 查询单条数据(菜谱)
-func QueryRowCp(name string) (string, string, [9][5]string, [9][5]string, [9][5]string) {
+func QueryRowCp(name string) (bool, string, string, [9][5]string, [9][5]string, [9][5]string) {
 	sqlStr := "select ChangJing ,time ,zaocan, wucan ,wancan from book where time=?"
 	var u model.BaoCuncdCP
 	err := DbInit.Conn.Get(&u, sqlStr, name)
@@ -147,7 +147,7 @@ func QueryRowCp(name string) (string, string, [9][5]string, [9][5]string, [9][5]
 	)
 	if err != nil {
 		fmt.Printf("get failed, err:%v\n", err)
-		return times, changjing, [9][5]string{}, [9][5]string{}, [9][5]string{}
+		return false, times, changjing, [9][5]string{}, [9][5]string{}, [9][5]string{}
 	}
 	times = u.Time
 	changjing = u.ChangJing
@@ -157,7 +157,31 @@ func QueryRowCp(name string) (string, string, [9][5]string, [9][5]string, [9][5]
 
 	fmt.Printf("name:%s ", u)
 
-	return times, changjing, zaocan, wucan, wancan
+	return true, times, changjing, zaocan, wucan, wancan
+}
+
+// 查询单条数据(菜谱两个条件)
+func QueryRowCps(name string, c string) (bool, string, string, [9][5]string, [9][5]string, [9][5]string) {
+	sqlStr := "select ChangJing ,time ,zaocan, wucan ,wancan from book where time=? and ChangJing =?"
+	var u model.BaoCuncdCP
+	err := DbInit.Conn.Get(&u, sqlStr, name, c)
+	var (
+		times     = ""
+		changjing = ""
+	)
+	if err != nil {
+		fmt.Printf("get failed, err:%v\n", err)
+		return false, times, changjing, [9][5]string{}, [9][5]string{}, [9][5]string{}
+	}
+	times = u.Time
+	changjing = u.ChangJing
+	zaocan := strtojson(u.ZaoCan)
+	wucan := strtojson(u.WuCan)
+	wancan := strtojson(u.WanCan)
+
+	fmt.Printf("name:%s ", u)
+
+	return true, times, changjing, zaocan, wucan, wancan
 }
 
 //更新数据
@@ -178,9 +202,52 @@ func Updata(c *model.UpdataBody) bool {
 	return true
 }
 
+//更新数据（菜谱）
+func Updatals(c *model.BaoCuncd) bool {
+	sqlstr := "update book set ChangJing=?,time=?,ZaoCan=?,wucan=?,wancan=? ,update_at=? where time = ? and ChangJing = ?"
+	res, err := DbInit.Conn.Exec(sqlstr, c.ChangJing, c.Time, c.ZaoCan, c.WuCan, c.WanCan, time.Now(), c.Time, c.ChangJing)
+	if err != nil {
+		fmt.Println("exec failed, ", err)
+		return false
+
+	}
+	row, err := res.RowsAffected()
+	if err != nil {
+		fmt.Println("rows failed, ", err)
+		return false
+	}
+	fmt.Println("update succ:", row)
+	return true
+
+}
+
 //删除数据
 func Delete(name string) bool {
 	sqlstr := "delete from food where BianMa=?"
+	res, err := DbInit.Conn.Exec(sqlstr, name)
+	if err != nil {
+		fmt.Println("exec failed, ", err)
+		return false
+	}
+
+	row, err := res.RowsAffected()
+	if err != nil {
+		fmt.Println("rows failed, ", err)
+		return false
+	}
+
+	fmt.Println("delete succ: ", row)
+	if row == 0 {
+		return false
+	} else {
+		return true
+	}
+
+}
+
+//删除数据(历史菜谱)
+func Deletels(name string) bool {
+	sqlstr := "delete from book where time=?"
 	res, err := DbInit.Conn.Exec(sqlstr, name)
 	if err != nil {
 		fmt.Println("exec failed, ", err)

@@ -47,6 +47,17 @@
         <input checked name="ChangJing" type="radio" value="主厅">主厅
         <input name="ChangJing" type="radio" value="职工">职工
     </div>
+    <div>
+        <select name="sclishi">
+            <option>-选择需要删除的历史菜谱-</option>
+            {{ range .le }}
+            <option >{{.}}</option>
+            {{end}}
+        </select>
+        <button onclick="sclishi()">删除历史菜谱</button>
+
+    </div>
+
 
 </div>
 <!--startprint-->
@@ -308,8 +319,6 @@
             '2':[],
             '3':[],
             '4':[],
-
-
         };
         var wucan ={
             '0':[],
@@ -326,12 +335,10 @@
             '4':[],
         };
         var baocuntime =$('input[name="inputtime1"]').val()+"--"+$('input[name="inputtime2"]').val();
-
         if (baocuntime ==="--"){
             alert("请选择时间！")
             return
         }
-
         $('.zaocamtr').each(function (){
 
             $(this).find('th').each(function (k,v) {
@@ -352,12 +359,6 @@
                 wancan[k].push($(this).html())
             })
         })
-        console.log(JSON.stringify(zaocan))
-        console.log(wucan)
-        console.log(wancan)
-        console.log(baocuntime)
-        console.log(ting)
-
         $.ajax({
             url: '/baocuncd',
             type: 'post',
@@ -391,6 +392,20 @@
     }
     function redll(){
         window.location.reload()
+    }
+
+    function sclishi(){
+        var times = $('select[name="sclishi"]').val().split("(")[0]
+        $.ajax({
+            url: '/deletels?id='+times,
+            type: 'Get',
+            success: function (args) {
+
+                location.reload()
+
+            }
+        })
+
     }
 
 

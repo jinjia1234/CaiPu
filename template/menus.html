@@ -47,6 +47,16 @@
         <input checked name="ChangJing" type="radio" value="主厅">主厅
         <input name="ChangJing" type="radio" value="职工">职工
     </div>
+    <div>
+        <select name="sclishi">
+            <option>-选择需要删除的历史菜谱-</option>
+            {{ range .le }}
+            <option >{{.}}</option>
+            {{end}}
+        </select>
+        <button onclick="sclishi()">删除历史菜谱</button>
+
+    </div>
 
 </div>
 <!--startprint-->
@@ -228,6 +238,19 @@
     }
 
 
+    function sclishi(){
+        var times = $('select[name="sclishi"]').val().split("(")[0]
+        $.ajax({
+            url: '/deletels?id='+times,
+            type: 'Get',
+            success: function (args) {
+
+                location.reload()
+
+            }
+        })
+
+    }
 
 
 
