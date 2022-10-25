@@ -8,6 +8,56 @@ import (
 	"time"
 )
 
+func QueryFoodMetaMultiRow() []model.FoodMeta {
+	sqlStr := "select  * from food_meta"
+	var s []model.FoodMeta
+	err := DbInit.Conn.Select(&s, sqlStr)
+	if err != nil {
+		fmt.Printf("query failed, err:%v\n", err)
+		return s
+	}
+	return s
+}
+func QueryFoods(where map[string]string) []model.Foods {
+	whereStr := ""
+	state := where["state"]
+	if state != "" {
+		whereStr += " state='" + state + "' and "
+	}
+	ChangJing := where["ChangJing"]
+	if ChangJing != "" {
+		whereStr += " ChangJing='" + ChangJing + "' and "
+	}
+	LeiXing := where["LeiXing"]
+	if LeiXing != "" {
+		whereStr += " LeiXing='" + LeiXing + "' and "
+	}
+	FangShi := where["FangShi"]
+	if FangShi != "" {
+		whereStr += " FangShi='" + FangShi + "' and "
+	}
+	TeSe := where["TeSe"]
+	if TeSe != "" {
+		whereStr += " TeSe='" + TeSe + "' and "
+	}
+	DengJi := where["DengJi"]
+	if DengJi != "" {
+		whereStr += " DengJi='" + DengJi + "' and "
+	}
+	TuiJian := where["TuiJian"]
+	if TuiJian != "" {
+		whereStr += " TuiJian='" + TuiJian + "' and "
+	}
+	sqlStr := "select  * from food where " + whereStr + " 1=1 "
+	var amp []model.Foods
+	err := DbInit.Conn.Select(&amp, sqlStr)
+	if err != nil {
+		fmt.Printf("query failed, err:%v\n", err)
+		return amp
+	}
+	return amp
+}
+
 // 查询多条数据
 func QueryMultiRow() []model.Foods {
 	sqlStr := "select  * from food where id > ?"
@@ -17,10 +67,8 @@ func QueryMultiRow() []model.Foods {
 	if err != nil {
 		fmt.Printf("query failed, err:%v\n", err)
 		return amp
-
 	}
 	return amp
-
 }
 
 func QueryMultiRowCP() []model.BaoCuncdS {

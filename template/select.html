@@ -19,9 +19,16 @@
 <button type="button" onclick="location.href='?id={{.id}}&leixing=汤'">汤</button>
 <table>
     <tr>
-        <th>编号</th>
-        <th>类型</th>
-        <th>名称</th>
+        <th>菜品名称</th>
+        <th>使用</th>
+        <th>使用场景</th>
+        <th>菜品类型</th>
+        <th>烹饪方式</th>
+        <th>主要食材</th>
+        <th>菜品特色</th>
+        <th>成本等级</th>
+        <th>推荐指数</th>
+        <th>其它说明</th>
     </tr>
     <tbody class="list">
     </tbody>
@@ -51,10 +58,21 @@
     }
     $('.list').html('');
     for (var i = 0; i < data.length; i++) {
-        $('.list').append('<tr><td>' + data[i].BianMa + '</td><td>' + data[i].LeiXing + '</td><td>' + data[i].Name + '</td></tr>');
+        $('.list').append('<tr>' +
+            '<td>' + data[i].Name + '</td>' +
+            '<td>' + data[i].State + '</td>' +
+            '<td>' + data[i].ChangJing + '</td>' +
+            '<td>' + data[i].LeiXing + '</td>' +
+            '<td>' + data[i].FangShi + '</td>' +
+            '<td>' + data[i].ShiCai + '</td>' +
+            '<td>' + data[i].TeSe + '</td>' +
+            '<td>' + data[i].DengJi + '</td>' +
+            '<td>' + data[i].TuiJian + '</td>' +
+            '<td>' + data[i].BeiZhu + '</td>' +
+            '</tr>');
     }
     $(document).on('click','.list td',function (){
-        parent.select("{{.id}}", $(this).parents('tr').find('td:nth-child(3)').html());
+        parent.select("{{.id}}", $(this).parents('tr').find('td:nth-child(1)').html());
         parent.ymPrompt.close();
     });
 

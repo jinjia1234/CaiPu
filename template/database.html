@@ -13,6 +13,7 @@
         display: inline;
         margin: 30px;
     }
+    table {width: 1200px;}
 </style>
 <body>
 
@@ -80,6 +81,7 @@
                             </select>
                         </th>
                         <th>
+
                             <select name="changjing">
                                 <option>-请选择-</option>
                                 {{ range .ChangJing }}
@@ -142,19 +144,64 @@
     <div>
         <table border="1">
             <tr>
-                <th colspan="20">菜品库</th>
-            </tr>
-            <tr>
                 <th>菜品编码</th>
                 <th>菜品名称</th>
-                <th>使用</th>
-                <th>使用场景</th>
-                <th>菜品类型</th>
-                <th>烹饪方式</th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">使用</option>
+                        <option onclick="location.href='?state=启用'">启用</option>
+                        <option onclick="location.href='?state=未启用'">未启用</option>
+                    </select>
+                </th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">使用场景</option>
+                        {{range .ChangJing}}
+                            <option onclick="location.href='?ChangJing={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">菜品类型</option>
+                        {{range .LeiXing}}
+                        <option onclick="location.href='?LeiXing={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">烹饪方式</option>
+                        {{range .FangShi}}
+                        <option onclick="location.href='?FangShi={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
                 <th>主要食材</th>
-                <th>菜品特色</th>
-                <th>成本等级</th>
-                <th>推荐指数</th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">菜品特色</option>
+                        {{range .TeSe}}
+                        <option onclick="location.href='?TeSe={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">成本等级</option>
+                        {{range .DengJi}}
+                        <option onclick="location.href='?DengJi={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
+                <th>
+                    <select>
+                        <option onclick="location.href='?'">推荐指数</option>
+                        {{range .ZhiShu}}
+                        <option onclick="location.href='?TuiJian={{.}}'">{{.}}</option>
+                        {{end}}
+                    </select>
+                </th>
                 <th>其它说明</th>
             </tr>
             {{ range .Quer }}

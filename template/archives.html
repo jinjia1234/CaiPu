@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>基础信息</title>
     <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <script src="../public/js/jquery-3.6.1.min.js"></script>
 </head>
 
 <style>
@@ -32,7 +33,9 @@
         <a href="basic">菜单存档</a>
     </div>
 </div>
-
+<div>
+    <button type="button" class="BaoCun">保存更新</button>
+</div>
 <div>
     <table border="1">
         <tr>
@@ -51,16 +54,37 @@
         {{ range  .Tdd }}
             <tr>
             {{range .}}
-                <th > {{.}}</th>
+                <th><input value="{{.}}"></th>
             {{end}}
             </tr>
         {{end}}
-
-
-
-
-
-
+        <tr>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+        </tr>
+        <tr>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+        </tr>
+        <tr>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+            <th><input></th>
+        </tr>
     </table>
 
 
@@ -68,5 +92,43 @@
 
 </div>
 
+<script>
+    $(document).ready(function () {
+        $(document).on('click','.BaoCun',function (){
+            var data ={
+                '0':[],
+                '1':[],
+                '2':[],
+                '3':[],
+                '4':[],
+                '5':[],
+                '6':[],
+            };
+            $('table tr').each(function (){
+                $(this).find('th').each(function (k,v) {
+                    var value = $(this).find("input").val();
+                    if(value !="" && value!=undefined){
+                        data[k].push(value);
+                    }
+                })
+            });
+            var d = [];
+            for (var i=0;i<Object.keys(data).length ;i++){
+                // d["a"+i] = JSON.stringify(data[i])
+                d[i] = data[i]
+            }
+            console.log(d);
+            $.ajax({
+                type:'post',
+                url:'/chives',
+                data:{data:d},
+                success:function (res){
+                    alert("操作成功");
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

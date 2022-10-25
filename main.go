@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
+	"github.com/tidwall/gjson"
 )
 
 var (
@@ -18,13 +19,28 @@ var (
 )
 
 func main() {
+	//cmdLine := "dir"
+	//cmd := exec.Command("cmd.exe", "/c", "start "+cmdLine)
+	//if stdout, err := cmd.StdoutPipe(); err != nil { //获取输出对象，可以从该对象中读取输出结果
+	//	log.Fatal(err)
+	//}
+	//
+	//defer stdout.Close()                // 保证关闭输出流
+	//if err := cmd.Start(); err != nil { // 运行命令
+	//
+	//	log.Fatal(err)
+	//
+	//}
+	//err1 := cmd.Run()
+	//fmt.Printf("%s, error:%v \n", cmdLine, err1)
+	//return
 	configPath := flag.String("config", "./config/config.toml", "config path")
 	flag.Parse()
 	cfg = config.Init(*configPath)
 	svc = service.New(cfg)
 	dbsql.New(cfg)
 
-	var tid, data = config.JichuanInit()
+	var tid, _ = config.JichuanInit()
 
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
@@ -93,18 +109,46 @@ func main() {
 		})
 	})
 
-	app.Get("/data", func(c *fiber.Ctx) error {
+	app.Get("/data/*", func(c *fiber.Ctx) error {
 		var (
 			err   error
 			foods []model.Food
 		)
+		where := make(map[string]string)
+		state := c.Query("state")
+		if state != "" {
+			where["state"] = state
+		}
+		ChangJing := c.Query("ChangJing")
+		if ChangJing != "" {
+			where["ChangJing"] = ChangJing
+		}
+		LeiXing := c.Query("LeiXing")
+		if LeiXing != "" {
+			where["LeiXing"] = LeiXing
+		}
+		FangShi := c.Query("FangShi")
+		if FangShi != "" {
+			where["FangShi"] = FangShi
+		}
+		TeSe := c.Query("TeSe")
+		if TeSe != "" {
+			where["ChangJing"] = TeSe
+		}
+		DengJi := c.Query("DengJi")
+		if DengJi != "" {
+			where["DengJi"] = DengJi
+		}
+		TuiJian := c.Query("TuiJian")
+		if TuiJian != "" {
+			where["TuiJian"] = TuiJian
+		}
 		foods, err = svc.FindFoods()
 		if err != nil {
 			return c.JSON(err)
-
 		}
 		conun, countHunCai, countSuCai, counT, counZao := dbsql.Count()
-
+		foodMeta := dbsql.QueryFoodMetaMultiRow()
 		if err != nil {
 			return err
 		}
@@ -112,13 +156,13 @@ func main() {
 			return c.JSON(err)
 		}
 		return c.Render("database", fiber.Map{
-			"ChangJing":   data[0],
-			"LeiXing":     data[1],
-			"FangShi":     data[2],
-			"TeSe":        data[3],
-			"DengJi":      data[4],
-			"ZhiShu":      data[5],
-			"Quer":        dbsql.QueryMultiRow(),
+			"ChangJing":   gjson.Parse(foodMeta[1].MetaValue).Array(),
+			"LeiXing":     gjson.Parse(foodMeta[2].MetaValue).Array(),
+			"FangShi":     gjson.Parse(foodMeta[3].MetaValue).Array(),
+			"TeSe":        gjson.Parse(foodMeta[4].MetaValue).Array(),
+			"DengJi":      gjson.Parse(foodMeta[5].MetaValue).Array(),
+			"ZhiShu":      gjson.Parse(foodMeta[6].MetaValue).Array(),
+			"Quer":        dbsql.QueryFoods(where),
 			"Quer1":       foods,
 			"countFood":   conun,
 			"countHunCai": countHunCai,
@@ -241,6 +285,26 @@ func main() {
 		return c.Render("archives", fiber.Map{
 			"Tdd": tid,
 		})
+	})
+	app.Post("/chives", func(c *fiber.Ctx) error {
+		body := new(model.FoodMetaTest)
+		err := c.BodyParser(body)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+		var res = true
+		//for _, v := range body {
+		//
+		//}
+		fmt.Println(body.Data)
+		//dbsql.Updatals(body)
+
+		if res {
+			return c.SendString("保存菜谱成功！")
+		} else {
+			return c.SendString("保存菜谱失败！")
+		}
 	})
 	app.Get("/basic", func(c *fiber.Ctx) error {
 		return c.Render("basic", fiber.Map{

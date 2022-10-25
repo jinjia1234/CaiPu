@@ -292,7 +292,7 @@
     var cdlist = [];
     !function (){
         {{range .cdlist}}
-            var row = {BianMa:"{{.BianMa}}",LeiXing:"{{.LeiXing}}",Name:"{{.Name}}"};
+            var row = {{.}};
             cdlist.push(row);
         {{end}}
     }()
@@ -301,7 +301,7 @@
     var ting ='主厅'
     $(document).ready(function () {
         $(document).on('click','.zaocamtr th,.wucantr th,.wancantr th',function (){
-            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
+            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 1100, height: 700, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
         });
         $(document).on('click','input[name="ChangJing"]',function (){
             ting = $(this).val()
