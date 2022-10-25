@@ -11,10 +11,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
 	"github.com/tidwall/gjson"
-	"golang.org/x/text/encoding/simplifiedchinese"
 	"os"
 	"os/exec"
-	"strings"
 )
 
 var (
@@ -302,10 +300,10 @@ func main() {
 	app.Post("/food_find", http.FoodFind) // 菜查询
 	app.Post("/hooks", func(c *fiber.Ctx) error {
 		dir, _ := os.Getwd()
-		cmd := exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
-		output, _ := cmd.CombinedOutput()
-		data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
-		fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
+		exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
+		//output, _ := cmd.CombinedOutput()
+		//data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
+		//fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
 		return c.JSON(map[string]interface{}{"code": 0, "msg": "success"})
 	})
 	err := app.Listen(":" + cfg.Port)
