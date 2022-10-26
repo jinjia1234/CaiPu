@@ -9,6 +9,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/basicauth"
 	"github.com/gofiber/template/html"
 	"github.com/tidwall/gjson"
 	"os"
@@ -30,8 +31,35 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
 	})
+	app.Post("/hooks", func(c *fiber.Ctx) error {
+		dir, _ := os.Getwd()
+		exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
+		//output, _ := cmd.CombinedOutput()
+		//data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
+		//fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
+		return c.JSON(map[string]interface{}{"code": 1, "msg": "success"})
+	})
+	app.Use(basicauth.New(basicauth.Config{
+		Users: map[string]string{
+			cfg.Auth["username"]: cfg.Auth["password"],
+		},
+		Realm: "login",
+		Authorizer: func(user, pass string) bool {
+			if user == cfg.Auth["username"] && pass == cfg.Auth["password"] {
+				return true
+			}
+			return false
+		},
+		Unauthorized: func(c *fiber.Ctx) error {
+			c.Status(fiber.StatusUnauthorized)
+			c.Set("Content-Type", `text/html; charset=iso-8859-1`)
+			c.Set("WWW-Authenticate", `Basic realm="restricted", charset="UTF-8"`)
+			return c.Send([]byte("unauthorized: authentication required"))
+		},
+		ContextUsername: "_user",
+		ContextPassword: "_pass",
+	}))
 	app.Static("/public", "/public")
-
 	/*
 		/主目录
 		/menu 菜单编排
@@ -50,15 +78,12 @@ func main() {
 			"Title": "Hello, Worl!",
 		})
 	})
-
 	app.Get("/menu", func(c *fiber.Ctx) error {
-
 		res := dbsql.QueryMultiRowCP()
 		//sum := len(res)
 		var le []string
 		for _, v := range res {
 			le = append(le, v.Time+"("+v.ChangJing+"厅)")
-
 		}
 		fmt.Println(le)
 		return c.Render("menu", fiber.Map{
@@ -71,7 +96,6 @@ func main() {
 		dbsql.Deletels(times)
 		return c.SendString("2")
 	})
-
 	app.Get("/menus", func(c *fiber.Ctx) error {
 		id := c.Query("id")
 		res := dbsql.QueryMultiRowCP()
@@ -79,9 +103,7 @@ func main() {
 		var le []string
 		for _, v := range res {
 			le = append(le, v.Time+"("+v.ChangJing+"厅)")
-
 		}
-
 		_, times, changjing, zaocan, wucan, wancan := dbsql.QueryRowCp(id)
 		return c.Render("menus", fiber.Map{
 			"times":     times,
@@ -93,7 +115,6 @@ func main() {
 			"le":        le,
 		})
 	})
-
 	app.Get("/data/*", func(c *fiber.Ctx) error {
 		var (
 			err error
@@ -150,7 +171,6 @@ func main() {
 			"counZao":     counZao,
 		})
 	})
-
 	app.Post("/iast", func(c *fiber.Ctx) error {
 		//c.Accepts("application/json")
 		body := new(model.UpdataBody)
@@ -159,7 +179,6 @@ func main() {
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
-
 		}
 		res := dbsql.IastInserId(body)
 		fmt.Println(body)
@@ -172,12 +191,10 @@ func main() {
 	app.Post("/upda", func(c *fiber.Ctx) error {
 		//c.Accepts("application/json")
 		body := new(model.UpdataBody)
-
 		err := c.BodyParser(body)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
-
 		}
 		res := dbsql.Updata(body)
 		fmt.Println(body)
@@ -187,32 +204,26 @@ func main() {
 			return c.SendString("更新菜品失败！")
 		}
 	})
-
 	app.Post("baocuncd", func(c *fiber.Ctx) error {
 		body := new(model.BaoCuncd)
 		err := c.BodyParser(body)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
-
 		}
 		var res = true
-
 		bol, _, _, _, _, _ := dbsql.QueryRowCps(body.Time, body.ChangJing)
 		if bol {
 			dbsql.Updatals(body)
 		} else {
 			res = dbsql.IastInserCP(body)
 		}
-
 		if res {
 			return c.SendString("保存菜谱成功！")
 		} else {
 			return c.SendString("保存菜谱失败！")
 		}
-
 	})
-
 	app.Post("/chaxun", func(c *fiber.Ctx) error {
 		body := new(model.UpdataBody)
 		err := c.BodyParser(body)
@@ -227,25 +238,20 @@ func main() {
 			return c.SendString("1")
 		}
 	})
-
 	app.Get("/lishi", func(c *fiber.Ctx) error {
 		res := dbsql.QueryMultiRowCP()
 		//sum := len(res)
 		var le []string
 		for _, v := range res {
 			le = append(le, v.Time+"("+v.ChangJing+"厅)")
-
 		}
 		fmt.Println(le)
-
 		return c.Render("lishi", fiber.Map{
 			"le": le,
 		})
 	})
-
 	app.Post("/delete", func(c *fiber.Ctx) error {
 		body := new(model.UpdataBody)
-
 		err := c.BodyParser(body)
 		bol := dbsql.Delete(body.Bianma)
 		if err != nil {
@@ -259,17 +265,14 @@ func main() {
 			return c.SendString("菜品删除失败！")
 		}
 	})
-
 	app.Get("/chives", func(c *fiber.Ctx) error {
 		//var tid, _ = config.JichuanInit()
-
 		foodMeta := dbsql.QueryFoodMetaMultiRow()
 		tid := config.Jichuantoarr(foodMeta)
 		return c.Render("archives", fiber.Map{
 			"Tdd": tid,
 		})
 	})
-
 	app.Post("/chives", func(c *fiber.Ctx) error {
 		body := new(model.FoodMetaSave)
 		err := c.BodyParser(body)
@@ -298,14 +301,6 @@ func main() {
 	})
 	app.Post("/food_save", http.FoodSave) // 菜保存
 	app.Post("/food_find", http.FoodFind) // 菜查询
-	app.Post("/hooks", func(c *fiber.Ctx) error {
-		dir, _ := os.Getwd()
-		exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
-		//output, _ := cmd.CombinedOutput()
-		//data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
-		//fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
-		return c.JSON(map[string]interface{}{"code": 0, "msg": "success"})
-	})
 	err := app.Listen(":" + cfg.Port)
 	if err != nil {
 		return

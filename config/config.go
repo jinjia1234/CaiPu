@@ -7,8 +7,9 @@ import (
 )
 
 type Configuration struct {
-	Port     string       `toml:"port"`
-	Database sql.Database `toml:"database"`
+	Port     string            `toml:"port"`
+	Auth     map[string]string `toml:"auth"`
+	Database sql.Database      `toml:"database"`
 }
 
 var config *Configuration
