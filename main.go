@@ -31,12 +31,13 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: html.New("./template", ".html"),
 	})
-	app.Post("/hooks", func(c *fiber.Ctx) error {
+	app.Post("/hook", func(c *fiber.Ctx) error {
 		dir, _ := os.Getwd()
-		exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
-		//output, _ := cmd.CombinedOutput()
-		//data, _ := simplifiedchinese.GBK.NewDecoder().Bytes(output)
-		//fmt.Println(strings.ReplaceAll(string(data), "%", "%%"))
+		cmd := exec.Command("cmd.exe", "/c", "start "+dir+"/hook.cmd")
+		err := cmd.Run()
+		if err != nil {
+			return c.JSON(map[string]interface{}{"code": 0, "msg": err.Error()})
+		}
 		return c.JSON(map[string]interface{}{"code": 1, "msg": "success"})
 	})
 	app.Use(basicauth.New(basicauth.Config{
