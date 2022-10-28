@@ -3,15 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>菜单编排</title>
-    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <!-- <link href="./public/css/cals.css" rel="stylesheet" type="text/css"> -->
     <link href="./public/plugins/ymPrompt/skin/flatty/ymPrompt.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="./public/plugins/ymPrompt/ymPrompt.js" type="text/javascript"></script>
     <script src="../public/js/jquery-3.6.1.min.js"></script>
 </head>
 
+<style>
+    /*    .menu_top{
+            display:inline;
+            margin:30px;
+        } */
+
+    /* 导航栏样式 */
+    body{background: whitesmoke;font-size: 14px;margin: 0;}
+    nav ul li{list-style: none;}
+    a {text-decoration: none;}
+    .container{width: 1000px; margin: auto;}
+    nav {background: #1A66B3;}
+    nav ul {font-size: 0;margin: 0;padding: 0;}
+    nav ul li {display: inline-block;}
+    nav ul li a {
+        color: #fff;
+        display: block;
+        font-size: 14px;
+        padding: 15px 14px;
+        transition: 0.3s linear;
+        width: 150px;
+    }
+    nav ul li:hover {background: #126d9b;}
+    nav ul li ul {
+        border-bottom: 5px solid #2ba0db;
+        display: none;
+        position: absolute;
+        width: 250px;
+    }
+    nav ul li ul li {
+        border-top: 1px solid #444;
+        display: block;
+    }
+
+    nav ul li ul li:first-child {
+        border-top: none;
+    }
+
+    nav ul li ul li a {
+        background:cadetblue;
+        display: block;
+        padding: 10px 14px;
+    }
+
+    nav ul li ul li a:hover {
+        background: #126d9b;
+    }
+
+    nav .fa.fa-angle-down {
+        margin-left: 6px;
+    }
+
+    button {
+        margin-bottom: 40px;
+        border: 2px solid white;
+        background: #1A66B3;
+        text-transform: uppercase;
+        color: white;
+        font-size: 20px;
+
+        width: 200px;
+        outline: none;
+        overflow: hidden;
+        height: 40px;
+        border-radius: 5px;
+
+    }
+
+
+    table {
+        width: 920px;
+        background: #ccc;
+        margin: 10px auto;
+        border-collapse: collapse;
+    }
+    th,td{
+        height: 25px;
+        line-height: 40px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+    th {
+        background: #eee;
+        font-weight: normal;
+    }
+    tr {
+        background: #fff;
+
+    }
+    tr:hover{
+        background: #D1FFFC;
+    }
+    td a{
+        color: #06F;
+        text-decoration: none;
+    }
+    td a:hover{
+        color: #06F;
+        text-decoration: underline;
+    }
+    .meum-th {
+        text-align: left;
+        white-space:pre
+    }
+
+</style>
+
 <body>
 
-<div class="menu_">
+<!-- <div class="menu_">
     <div class="menu_top a">
         <a href="/">系统功能首页</a>
     </div>
@@ -28,26 +135,53 @@
 
         <a href="basic">菜单存档</a>
     </div>
-</div>
+</div> -->
+
+<!-- 新 -->
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="/">系统功能首页</a></li>
+            <li><a href="menu">菜单编排</a></li>
+            <li><a href="data">菜品资料库</a></li>
+            <li><a href="chives">基础信息</a></li>
+            <li><a href="basic">菜单存档</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<!--  -->
+
 
 <div class="menu_qj">
-    <div class="menu_top">
+    <!--    <div class="menu_top">
+            <button onclick="baocuncd()">保存菜单</button>
+        </div>
+        <div class="menu_top">
+            <button onclick="doPrint()">打印菜单</button>
+        </div>
+        <div class="menu_top">
+            <button onclick="redll()">清空菜单</button>
+        </div>
+        <div class="menu_top">
+            <button onclick="lishi()">打开历史存档菜谱</button>
+        </div> -->
+
+    <!--    <div>
+            <input checked name="ChangJing" type="radio" value="主厅">主厅
+            <input name="ChangJing" type="radio" value="职工">职工
+        </div>
+         -->
+
+    <div style="width: 100%;text-align: center;margin-top: 1.25rem;">
         <button onclick="baocuncd()">保存菜单</button>
-    </div>
-    <div class="menu_top">
         <button onclick="doPrint()">打印菜单</button>
-    </div>
-    <div class="menu_top">
         <button onclick="redll()">清空菜单</button>
-    </div>
-    <div class="menu_top">
         <button onclick="lishi()">打开历史存档菜谱</button>
-    </div>
-    <div class="menu_top">
-        <input checked name="ChangJing" type="radio" value="主厅">主厅
-        <input name="ChangJing" type="radio" value="职工">职工
-    </div>
-    <div>
+
         <select name="sclishi">
             <option>-选择需要删除的历史菜谱-</option>
             {{ range .le }}
@@ -55,14 +189,19 @@
             {{end}}
         </select>
         <button onclick="sclishi()">删除历史菜谱</button>
+    </div>
 
+    <div style="width: 100%;text-align: center;margin-top: 20px;margin-bottom: 20px ;">
+		<span>	<input checked name="ChangJing" type="radio" value="主厅">主厅
+		<input name="ChangJing" type="radio" value="职工">职工</span>
+        </span>
     </div>
 
 </div>
 <!--startprint-->
 
-<div class="menu_qje" id="printArea">
-    <table border="1">
+<div style="width: 100%;" id="printArea">
+    <table border="1" style="margin: 0 auto">
         <tr>
             <th colspan="20" id="tim">机关食堂菜单{{.changjing}}</th>
         </tr>
@@ -111,20 +250,27 @@
     </table>
     <br>
     <br>
-
 </div>
 
 <!--endprint-->
 
+<br>
+<br>
 
-
-
+<!-- 按钮 -->
+<!-- <p style="text-align: center;">
+ <button onclick="baocuncd()">保存菜单</button>
+ <button onclick="doPrint()">打印菜单</button>
+ <button onclick="redll()">清空菜单</button>
+  <button onclick="lishi()">打开历史存档菜谱</button>
+</p> -->
 
 <script>
     var cdlist = [];
+
     !function (){
         {{range .cdlist}}
-        var row = {BianMa:"{{.BianMa}}",LeiXing:"{{.LeiXing}}",Name:"{{.Name}}"};
+        var row = {{.}};
         cdlist.push(row);
         {{end}}
     }()
@@ -133,7 +279,7 @@
     var ting ='主厅'
     $(document).ready(function () {
         $(document).on('click','.zaocamtr th,.wucantr th,.wancantr th',function (){
-            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 500, height: 600, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
+            ymPrompt.win({message: './select?id='+$(this).attr('id'), width: 1100, height: 700, title: '菜品选择', maxBtn: true, minBtn: true, iframe: true})
         });
         $(document).on('click','input[name="ChangJing"]',function (){
             ting = $(this).val()
@@ -151,8 +297,6 @@
             '2':[],
             '3':[],
             '4':[],
-
-
         };
         var wucan ={
             '0':[],
@@ -169,7 +313,6 @@
             '4':[],
         };
         var baocuntime =$('input[name="inputtime1"]').val()+"--"+$('input[name="inputtime2"]').val();
-
         if (baocuntime ==="--"){
             alert("请选择时间！")
             return
@@ -194,12 +337,6 @@
                 wancan[k].push($(this).html())
             })
         })
-        console.log(JSON.stringify(zaocan))
-        console.log(wucan)
-        console.log(wancan)
-        console.log(baocuntime)
-        console.log(ting)
-
         $.ajax({
             url: '/baocuncd',
             type: 'post',
@@ -212,9 +349,7 @@
             },
             success: function (args) {
                 alert(args)
-
             }
-
         })
 
     }
@@ -237,7 +372,6 @@
         window.location.reload()
     }
 
-
     function sclishi(){
         var times = $('select[name="sclishi"]').val().split("(")[0]
         $.ajax({
@@ -254,14 +388,14 @@
 
 
 
-    function doPrint(){
-        //设置body隐藏，并设置打印区域为可见
-        document.body.style.visibility='hidden';
-        document.getElementById('printArea').style.visibility='visible';
-        window.print();
 
-        location.href='menu'
-        return false;
+
+    function doPrint(){
+        var innerHtml_ = document.body.innerHTML
+        document.body.innerHTML=document.getElementById('printArea').innerHTML
+        window.print();
+        document.body.innerHTML = innerHtml_
+
     }
 
 </script>

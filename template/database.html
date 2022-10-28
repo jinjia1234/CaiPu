@@ -3,21 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <title>菜品资料库</title>
-    <link href="../public/css/cals.css" rel="stylesheet" type="text/css">
+   <!-- <link href="../public/css/cals.css" rel="stylesheet" type="text/css"> -->
     <script src="../public/js/jquery-3.6.1.min.js"></script>
     <script src="../public/js/jquery-md5.js"></script>
 </head>
 
-<style>
+<!-- <style>
     .menu_top {
         display: inline;
         margin: 30px;
     }
     table {width: 1200px;}
+</style> -->
+
+<style>
+/*    .menu_top{
+        display:inline;
+        margin:30px;
+    } */
+	
+	/* 导航栏样式 */
+body{background: whitesmoke;font-size: 14px;margin: 0;}
+			nav ul li{list-style: none;}
+			a {text-decoration: none;}
+			.container{width: 1000px; margin: auto;}
+			nav {background: #1A66B3;}
+			nav ul {font-size: 0;margin: 0;padding: 0;}
+			nav ul li {display: inline-block;}
+			nav ul li a {
+			  color: #fff;
+			  display: block;
+			  font-size: 14px;
+			  padding: 15px 14px;
+			  transition: 0.3s linear;
+			  width: 150px;
+			}
+			nav ul li:hover {background: #126d9b;}
+			nav ul li ul {
+			  border-bottom: 5px solid #2ba0db;
+			  display: none;
+			  position: absolute;
+			  width: 250px;
+			}
+			nav ul li ul li {
+			  border-top: 1px solid #444;
+			  display: block;
+			}
+			
+			nav ul li ul li:first-child {
+			  border-top: none;
+			}
+			
+			nav ul li ul li a {
+			  background:cadetblue;
+			  display: block;
+			  padding: 10px 14px;
+			}
+			
+			nav ul li ul li a:hover {
+			  background: #126d9b;
+			}
+			
+			nav .fa.fa-angle-down {
+			  margin-left: 6px;
+			}
+			
+			
+			button {
+			  border: 2px solid white;
+			  background: #1A66B3;
+			  text-transform: uppercase;
+			  color: white;
+			  font-size: 20px;
+			 
+			 width: 150px;
+			  outline: none;
+			  overflow: hidden;
+			 height: 40px;
+			 border-radius: 5px;
+			 
+			}
+			
+			.tableClas:{
+			width: 100%;
+			text-align: center;
+			}
+			
+			/* 表格样式 */
+			
+			input{
+				width: 80%;
+			}
+			
+			
+			table {
+			    width: 920px;
+			    background: #ccc;
+			    margin: 10px auto;
+			    border-collapse: collapse;
+			}
+			th,td{
+			    height: 25px;
+			    line-height: 40px;
+			    text-align: center;
+			    border: 1px solid #ccc;
+			}
+			th {
+			    background: #eee;
+			    font-weight: normal;
+			}
+			tr {
+			    background: #fff;
+			
+			}
+			tr:hover{
+			    background: #D1FFFC;
+			}
+			td a{
+			    color: #06F;
+			    text-decoration: none;
+			}
+			td a:hover{
+			    color: #06F;
+			    text-decoration: underline;
+			}
+			.meum-th {
+			    text-align: left;
+			    white-space:pre
+			}
+			
 </style>
 <body>
 
-<div class="menu_">
+<!-- <div class="menu_">
     <div class="menu_top">
         <a href="/">系统功能首页</a>
     </div>
@@ -33,20 +151,47 @@
     <div class="menu_top">
         <a href="basic">菜单存档</a>
     </div>
+</div> -->
+
+	<nav>
+		  <div class="container">
+		    <ul>
+		      <li><a href="/">系统功能首页</a></li>
+		      <li><a href="menu">菜单编排</a></li>
+	          <li><a href="data">菜品资料库</a></li>
+	          <li><a href="chives">基础信息</a></li>
+			  <li><a href="basic">菜单存档</a></li>
+		     
+		    </ul>
+		  </div>
+		</nav>
+
+
+<!-- -->
+<div style="width: 100%;">
+    <h2>当前已收录菜品：{{.countFood}}个；荤菜：{{.countHunCai}}个；素菜{{.countSuCai}}个;汤{{.counT}}个；早餐{{.counZao}}个。</h2>
+	<hr >
 </div>
 
-<div>
-    <div>机关食堂菜品资料库</div>
-    <div>当前已收录菜品：{{.countFood}}个；荤菜：{{.countHunCai}}个；素菜{{.countSuCai}}个;汤{{.counT}}个；早餐{{.counZao}}个。</div>
+    <div style="text-align: center;width: 100%;margin-top: 20;margin-bottom: 20px;">
+		
+		 <span style="font-size: 24px;">机关食堂菜品资料库</span>
+		 
+		 
+		 <span style="position: absolute;right: 0px;">
+			 菜品信息维护（新增、更新、删除）
+	      <button onclick="updata()">保存/更新</button>
+	       <button onclick="deletes()">删除菜品信息</button>
+		 </span>
+		 
+		 
+		</div>
+		
+<div>	
+<!-- 第一个表 -->
     <div>
-        <div>菜品信息维护（新增、更新、删除）</div>
-        <div>
-            <button onclick="updata()">保存/更新</button>
-
-            <button onclick="deletes()">删除菜品信息</button>
-        </div>
-        <div>
-            <table border="1">
+        <div class="tableClas">
+            <table border="1" style="margin: 0 auto;table-layout: fixed;width: 90%;min-width: 1000px;">
                 <tr>
                     <th>菜品编码</th>
                     <th>菜品名称</th>
@@ -141,8 +286,10 @@
 
         </div>
     </div>
-    <div>
-        <table border="1">
+    
+	<!--第二个表 -->
+	<div class="tableClas">
+        <table border="1" style="margin: 0 auto;table-layout: fixed;width: 90%;min-width: 1000px;">
             <thead>
             <tr>
                 <th>菜品编码</th>
@@ -292,6 +439,12 @@
 
 </div>
 
+
+<!-- 按钮 -->
+<!-- <p style="text-align: center;">
+            <button onclick="updata()">保存/更新</button>
+            <button onclick="deletes()">删除菜品信息</button>
+        </p> -->
 <script>
     function getQueryString(name) {
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');

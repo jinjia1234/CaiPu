@@ -3,20 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <title>基础信息</title>
-    <link href="./public/css/cals.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/cals.css" rel="stylesheet" type="text/css">
     <script src="../public/js/jquery-3.6.1.min.js"></script>
 </head>
 
 <style>
-    .menu_top{
+/*    .menu_top{
         display:inline;
         margin:30px;
-    }
+    } */
+	
+	/* 导航栏样式 */
+body{background: whitesmoke;font-size: 14px;margin: 0;}
+			nav ul li{list-style: none;}
+			a {text-decoration: none;}
+			.container{width: 1000px; margin: auto;}
+			nav {background: #1A66B3;}
+			nav ul {font-size: 0;margin: 0;padding: 0;}
+			nav ul li {display: inline-block;}
+			nav ul li a {
+			  color: #fff;
+			  display: block;
+			  font-size: 14px;
+			  padding: 15px 14px;
+			  transition: 0.3s linear;
+			  width: 150px;
+			}
+			nav ul li:hover {background: #126d9b;}
+			nav ul li ul {
+			  border-bottom: 5px solid #2ba0db;
+			  display: none;
+			  position: absolute;
+			  width: 250px;
+			}
+			nav ul li ul li {
+			  border-top: 1px solid #444;
+			  display: block;
+			}
+			
+			nav ul li ul li:first-child {
+			  border-top: none;
+			}
+			
+			nav ul li ul li a {
+			  background:cadetblue;
+			  display: block;
+			  padding: 10px 14px;
+			}
+			
+			nav ul li ul li a:hover {
+			  background: #126d9b;
+			}
+			
+			nav .fa.fa-angle-down {
+			  margin-left: 6px;
+			}
+			
+			
+			button {
+			  border: 2px solid white;
+			  background: #1A66B3;
+			  text-transform: uppercase;
+			  color: white;
+			  font-size: 20px;
+			 
+			 width: 150px;
+			  outline: none;
+			  overflow: hidden;
+			 height: 40px;
+			 border-radius: 5px;
+			 
+			}
+			
+			.tableClas:{
+			width: 100%;
+			text-align: center;
+			}
 
 </style>
 
 <body>
-<div class="menu_">
+	
+	<!-- 菜单 -->
+<!-- <div class="menu_">
     <div class="menu_top">
         <a href="/">系统功能首页</a>
     </div>
@@ -32,11 +101,22 @@
     <div class="menu_top">
         <a href="basic">菜单存档</a>
     </div>
-</div>
-<div>
-    <button class="BaoCun" type="button">保存更新</button>
-</div>
-<div>
+</div> -->
+
+	<nav>
+		  <div class="container">
+		    <ul>
+		      <li><a href="/">系统功能首页</a></li>
+		      <li><a href="menu">菜单编排</a></li>
+	          <li><a href="data">菜品资料库</a></li>
+	          <li><a href="chives">基础信息</a></li>
+			  <li><a href="basic">菜单存档</a></li>
+		     
+		    </ul>
+		  </div>
+		</nav>
+
+<div class="tableClas">
     <table border="1">
         <tr>
             <th colspan="20" id="tim">菜单选项信息</th>
@@ -86,11 +166,11 @@
             <th><input></th>
         </tr>
     </table>
-
-
-
-
 </div>
+<p style="text-align: center;">
+ <button class="BaoCun" type="button">保存更新</button>	
+</p>
+ 
 
 <script>
     $(document).ready(function () {

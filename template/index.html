@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>系统功能首页</title>
-    <link href="../public/css/cals.css" rel="stylesheet" type="text/css">
+    <!-- <link href="../public/css/cals.css" rel="stylesheet" type="text/css"> -->
 </head>
 <style>
-    h1 {
+/*    h1 {
         letter-spacing:3px
     }
     .index_qj {
@@ -33,30 +33,127 @@
         margin:50px;
         text-align: center;
 
-    }
+    } */
+	
+	/* 新加样式 */
+	.pagetab{
+		width: 100%;
+		height: 100px;
+		background-color: #1A66B3;
+		text-align: center;
+	}
+	.tabFont{
+		line-height: 100px;
+		 font-size: 40px;
+		 color: #fff;
+		 transition: 0.3s linear;
+	}
+	
+	.pageBody{
+		width:  100%;
+		height: 1000px;
+		background-color: red;
+	}
+	.pageBodyLeft{
+		width: 70%;
+		height: 1000px;
+		float: left;
+		background-image: url(../public/img/001.jpg);
+	}
+	.bodyBox{
+		
+	}
+	
+	/* 按钮 */
+	#shiny-shadow {
+			
+				  height:850px;
+				  background: #1c2541;
+				  text-align: center;
+				 padding-top: 150px
+				}
+			
+				button {
+				 margin-bottom: 40px;
+				  border: 2px solid white;
+				  background: transparent;
+				  text-transform: uppercase;
+				  color: white;
+				  font-size: 30px;
+                    
+				 width: 400px;
+				  outline: none;
+				  overflow: hidden;
+			     height: 80px;
+				 border-radius: 20px;
+				 
+				}
+				
+				
+				
+	/* 			button:after {
+				  content: '';
+				    display: block;
+				    position: absolute;
+				    top: -36px;
+				    left: -100px;
+				    background: white;
+				    width: 50px;
+				    height: 125px;
+				    opacity: 20%;
+				    transform: rotate(-45deg);
+				}
+				
+				button:hover:after {
+				  left: 120%;
+				  transition: all 600ms cubic-bezier(0.3, 1, 0.2, 1);
+				   -webkit-transition: all 600ms cubic-bezier(0.3, 1, 0.2, 1);
+				} */
+
 </style>
 <body>
 
-
+<!-- 
 <div class="index_qj" >
+	
     <div class="top">
         <h1>机关单位食堂菜谱管理系统</h1>
     </div>
     <div class="low">
         <div class="low-t">
-            <a href="/menu">菜单编排</a>
             <button onclick="location.href='menu'">菜单编排</button>
         </div>
         <div class="low-t">
-            <a href="data">菜品资料库维护</a>
+            <button onclick="location.href='data'">菜品资料库维护</button>
         </div>
         <div class="low-t">
-            <a href="basic">基础信息</a>
+            <button onclick="location.href='chives'">基础信息</button>
         </div>
         <div class="low-t">
-            <a href="chives">历史菜单</a>
+            <button onclick="location.href='basic'">历史菜单</button>
         </div>
     </div>
 </div>
+ -->
+
+<!-- 新 -->
+
+<div class="pagetab">
+	<div class="tabFont">机 关 单 位 食 堂 菜 谱 管 理 系 统 </div>
+</div>
+
+<div class="pageBody">
+	<div class="pageBodyLeft"></div>
+	
+	<div class="pageBodyRight">
+			<div id="shiny-shadow">
+					   <p><button onclick="location.href='menu'">菜单编排</button> </p>
+					   <p><button onclick="location.href='data'">菜品资料库维护</button></p>
+					  <p><button onclick="location.href='chives'">基础信息</button></p>
+					  <p><button onclick="location.href='basic'">历史菜单</button></p>
+			</div>
+	</div>
+</div>
+
 </body>
 </html>
